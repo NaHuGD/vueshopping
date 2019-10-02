@@ -30,7 +30,7 @@ export default new Router({
             component: Dashboard,
             children:[
                 {
-                    path: 'products', //路由網址123
+                    path: 'products', //路由網址
                     name: 'Products',
                     component: Products,  
                     meta: { requiresAuth: true },//需要驗證，確保進入頁面需要驗正
