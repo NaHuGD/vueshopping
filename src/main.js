@@ -8,10 +8,10 @@ import 'bootstrap';
 import App from './App';
 import router from './router';
 
-Vue.use(VueAxios, axios);// 必須要在 Vue 設定的進入點(main.js)內使用，外部插件要使用的話都需要用Vue.use
 Vue.config.productionTip = false;
+Vue.use(VueAxios, axios);// 必須要在 Vue 設定的進入點(main.js)內使用，外部插件要使用的話都需要用Vue.use
 
-axios.defaults.withCredentials = true;
+axios.defaults.withCredentials = true;//開啟跨域
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

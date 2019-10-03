@@ -1,7 +1,7 @@
 <template>
     <div>
        <div class="text-right mt-4">
-           <button class="btn btn-primary" data-toggle="modal" @click="openModal">建立新的產品</button>
+           <button class="btn btn-primary" data-toggle="modal" @click="openModal(true)">建立新的產品</button>
        </div>
        <table class="table mt-4">
            <thead>
@@ -29,7 +29,7 @@
                       <span v-else>未啟用</span> 
                    </td>
                    <td>
-                       <button class="btn btn-outline-primary btn-sm">編輯</button>
+                       <button class="btn btn-outline-primary btn-sm" @click="openModal(false,item)">編輯</button>
                    </td>
                </tr>
            </tbody>
@@ -152,9 +152,9 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <!-- <div class="modal-body">
+      <div class="modal-body">
         是否刪除 <strong class="text-danger">{{ tempProduct.title }}</strong> 商品(刪除後將無法恢復)。
-      </div> -->
+      </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">取消</button>
         <button type="button" class="btn btn-danger"
@@ -174,6 +174,7 @@ export  default{
         return{
             products:[],
             tempProduct:{}, //送出欄位內容
+            isNew:false,
         };
     },
     methods:{
@@ -186,17 +187,36 @@ export  default{
                 vm.products = response.data.products;
             })
         },
-        openModal(){
+        openModal(isNew,item){
+            if(isNew){
+              this.tempProduct = {};
+              this.isNew = true; //true=>新增的
+            } else{
+              this.tempProduct = Object.assign({},item);//因為物件傳參考特性，用object.assign淺層複製
+              this.isNew = false; //false=>編輯
+              console.log(item)
+            }
             $('#productModal').modal('show');
         },
         updateProduct(){
-            const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/admin/product`;
+            let api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/admin/product`;
+            let httpMethod = 'post';
             const vm = this;
-            console.log(process.env.APIPATH,process.env.CUSTOMPATH);
-            this.$http.post(api,{data:vm.tempProduct}).then((response) => {
+            if(!vm.isNew) { //不是新的資料時(編輯時)
+              api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/admin/product/${vm.tempProduct.id}`;//修改資料api
+              httpMethod = 'put'; //編輯資料時修改http方式
+            }
+            this.$http[httpMethod](api,{data:vm.tempProduct}).then((response) => {
                 console.log(response.data);
-                // vm.products = response.data.products;
-            })
+                if(response.data.success){  //商品建立時
+                  $('#productModal').modal('hide'); //隱藏建立表單
+                  vm.getProducts(); //從新取得遠端料
+                }else{ //驗證失敗時
+                  $('#productModal').modal('hide');
+                  vm.getProducts();
+                  console.log('新增失敗');
+                }
+            });
         },
     },
     created(){ //補上created
