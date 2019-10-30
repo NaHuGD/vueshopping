@@ -7,22 +7,22 @@
        <table class="table mt-4">
            <thead>
                <tr>
-                   <th width="120">分類</th>
+                   <th width="">分類</th>
                    <th>產品名稱</th>
-                   <th width="120">原價</th>
-                   <th width="120">售價</th>
-                   <th width="100">是否啟用</th>
-                   <th width="100">編輯</th>
+                   <th width="">原價</th>
+                   <th width="">售價</th>
+                   <th width="">是否啟用</th>
+                   <th width="">編輯</th>
                </tr>
            </thead>
            <tbody>
                <tr v-for="(item) in products" :key="item.id">
                    <td>{{item.category}}</td>
                    <td>{{item.title}}</td>
-                   <td class="text-right">
+                   <td class="text-left">
                        {{item.origin_price | currency }}
                    </td>
-                   <td class="text-right">
+                   <td class="text-left">
                        {{item.price | currency }}
                    </td>
                    <td>
@@ -31,8 +31,6 @@
                    </td>
                    <td>
                        <button class="btn btn-outline-primary btn-sm" @click="openModal(false,item)">編輯</button>
-                   </td>
-                   <td>
                        <button class="btn btn-outline-danger btn-sm" @click="removeData(item)">刪除</button>
                    </td>
                </tr>
@@ -40,7 +38,6 @@
        </table>
       <!-- 分頁 -->
       <Pagination :pagination = "pagination" @emitPage="getProducts"></Pagination>
-
       <!-- /分頁 -->
        <!-- Modal -->
 <div class="modal fade" id="productModal" tabindex="-1" role="dialog"
@@ -49,7 +46,8 @@
     <div class="modal-content border-0">
       <div class="modal-header bg-dark text-white">
         <h5 class="modal-title" id="exampleModalLabel">
-          <span>新增產品</span>
+          <span v-if="isNew == true">新增產品</span>
+          <span v-else>編輯產品</span>
         </h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -193,6 +191,7 @@ export  default{
             status:{
               fileUploading:false,
             },
+            modalTitle:'',
         };
     },
     methods:{
@@ -203,19 +202,20 @@ export  default{
           vm.isLoading = true;//讀取資料時開起
           this.$http.get(api).then((response) => {
               console.log(response.data);
-              vm.isLoading = false,//完成後關閉loading功能
+              vm.isLoading = false;//完成後關閉loading功能
               vm.products = response.data.products;
               vm.pagination = response.data.pagination;
           })
       },
       openModal(isNew,item){ //打開表單
+          const vm = this;
           if(isNew){
             this.tempProduct = {};
             this.isNew = true; //true=>新增的
-          } else{
+          }else{
             this.tempProduct = Object.assign({},item);//因為物件傳參考特性，用object.assign淺層複製
             this.isNew = false; //false=>編輯
-            console.log(item)
+            console.log(item);
           }
           $('#productModal').modal('show');
       },
