@@ -57,3 +57,19 @@ router.beforeEach((to, from, next) => {
     next(); 
   }
 });
+
+scrollNav();
+function scrollNav() {
+  window.onload = function () {
+    let inner = document.querySelector('.inner');
+    window.addEventListener('scroll', function () {
+      if (window.scrollY === 0) {
+        inner.style = `margin:2rem auto 0 auto;`;
+      }
+      else {
+        inner.style = `margin:1rem auto 0 auto;`;
+      }
+    });
+  };
+}
+

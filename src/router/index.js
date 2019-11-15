@@ -1,13 +1,19 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 // import HelloWorld from '@/components/HelloWorld';
-import Dashboard from '@/components/dashboard';
+import Admin from '@/components/Admin';
+import User from '@/components/user/User';
 import Login from '@/components/pages/Login';
 import Products from '@/components/pages/Products';
 import Orders from '@/components/pages/Orders';
 import Coupons from '@/components/pages/Coupons';
 import  CustomerOrder from '@/components/pages/CustomerOrder';
 import  CustomerCheckout from '@/components/pages/CustomerCheckout';
+import  Home from '@/components/pages/Home';
+import  Shop from '@/components/pages/Shop';
+import ShopInside from '@/components/pages/ShopInside';
+import InsideSame from '@/components/pages/InsideSame';
+import Discount from '@/components/pages/Discount';
 
 Vue.use(Router);
 
@@ -15,14 +21,40 @@ export default new Router({
     routes:[
         {
             path:'*', //輸入路徑不是定義的path
-            redirect:'login', //導頁致官網
+            redirect:'home', //導頁致官網
         },
-        // {
-        //     path:'/',
-        //     name:'HelloWorld',
-        //     component: HelloWorld,
-        //     meta:{requiresAuth:true},
-        // },
+        {
+            path: '/', 
+            name: 'User',
+            component: User,
+            children: [
+                {   //一般頁面不需驗正
+                    path: 'home',
+                    name: 'Home',
+                    component: Home,
+                },
+                {   //一般頁面不需驗正
+                    path: 'shop',
+                    name: 'Shop',
+                    component: Shop,//載入樣式
+                },
+                {   //一般頁面不需驗正
+                    path: '/shop_inside/:itemId',
+                    name: 'ShopInside',
+                    component: ShopInside,
+                },
+                {   //一般頁面不需驗正
+                    path: '/inside_same/:itemId',
+                    name: 'InsideSame',
+                    component: InsideSame,
+                },
+                {   //一般頁面不需驗正
+                    path: 'discount',
+                    name: 'Discount',
+                    component: Discount,
+                },
+            ],
+        },
         {
             path: '/login',
             name: 'Login',
@@ -30,13 +62,13 @@ export default new Router({
         },
         {
             path: '/admin', //路由網址
-            name: 'Dashboard',
-            component: Dashboard,
-            children:[
+            name: 'Admin',
+            component: Admin,
+            children: [
                 {
                     path: 'products', //路由網址
                     name: 'Products',
-                    component: Products,  
+                    component: Products,
                     meta: { requiresAuth: true },//需要驗證，確保進入頁面需要驗正
                 },
                 {
@@ -54,18 +86,18 @@ export default new Router({
             ],
         },
         {
-            path:'/',
-            name: 'Dashboard',
-            component:Dashboard,
-            children:[
+            path: '/',
+            name: 'Admin',
+            component: Admin,
+            children: [
                 {   //一般頁面不需驗正
-                    path:'customer_order',
-                    name:'CustomerOrder',
-                    component:CustomerOrder,
+                    path: 'customer_order',
+                    name: 'CustomerOrder',
+                    component: CustomerOrder,
                 },
                 {   //結帳確認頁
-                    path:'customer_checkout/:orderId',
-                    name:'CustomerCheckout',
+                    path: 'customer_checkout/:orderId',
+                    name: 'CustomerCheckout',
                     component: CustomerCheckout,
                 },
             ],

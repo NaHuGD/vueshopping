@@ -57,6 +57,12 @@
                 模擬訂單
                 </router-link>
             </li>
+            <li class="nav-item">
+                <router-link to="/home" active-class="active" class="nav-link" href="#">
+                <span data-feather="file-text"></span>
+                回首頁
+                </router-link>
+            </li>
             <!-- <li class="nav-item">
                 <a class="nav-link" href="#">
                 <span data-feather="file-text"></span>
