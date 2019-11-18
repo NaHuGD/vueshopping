@@ -84,8 +84,6 @@ export default {
             products:'',//全部商品
             product:'',//單筆商品
             moreLook:[],
-            cart:{},
-            cartitem:[],
             num:'1',
         }
     },
@@ -134,9 +132,9 @@ export default {
                 qty:vm.num,
             }
             this.$http.post(url,{data:cart}).then((response) => {
-                console.log(response.data);
+                console.log(response.data); 
                 vm.getCart();
-                vm.cartLength = response.data.data.carts.length;
+                vm.$bus.$emit("bagToggle:push", false);
                 vm.isLoading = false;
             });
         },
@@ -145,9 +143,9 @@ export default {
             const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
             vm.isLoading = true;
             this.$http.get(url).then((response) => {
-                console.log('取得購物車資料',response.data.data);
-                vm.cart = response.data.data;
-                vm.cartitem = response.data.data.carts.length;
+                console.log('取得購物車資料',response);
+                vm.$bus.$emit("cartnum:push", response.data.data.carts.length);
+                vm.$bus.$emit("cartitem:push", response.data.data);
                 vm.isLoading = false;
             })
         },

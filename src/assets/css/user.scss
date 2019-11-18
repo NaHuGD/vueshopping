@@ -206,11 +206,11 @@ body{
                         &>div{
                             position: relative;
                             padding-left:5%;
+                            width: 170px;
                             &>p{
                                 overflow: hidden;
                                 white-space: nowrap;
                                 text-overflow: ellipsis;
-                                width: 160px;
                             }
                             span{
                                 p:nth-child(1){
@@ -305,7 +305,7 @@ body{
     }
 }
 /*main*/
-#discount,#shop,#home,#shopInside{
+#discount,#shop,#home,#shopInside,#checkoutPage{
     padding-top:150px;
     width: 90%;
     margin: 0 auto;
@@ -364,9 +364,9 @@ body{
     .item_info{
         position:sticky;
         z-index:1;
-        overflow: hidden;
         background:#fff;
         .pdname{
+            overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
             text-align: left;

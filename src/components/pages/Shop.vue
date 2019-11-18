@@ -22,7 +22,7 @@
         </div>
         <div class="subcate mb-3">商品頁</div>
             <div class="row">
-                <div class="col-md-4 col-sm-6 mb-4" v-for="(item,key) in products" :key="key">
+                <div class="col-6 col-md-4 col-lg-3 mb-4" v-for="(item,key) in products" :key="key">
                     <div class="border-0 shadow-sm shop_info" @click="goInside(item.id)">
                         <img :src="item.imageUrl" :alt="item.title">
                         <div class="item_info">

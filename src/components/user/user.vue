@@ -69,43 +69,29 @@ export default {
     components:{
         UserNavbar,
     },
-    // props:[`cartLength`],
-    // data(){
-    //     return{
-    //         mobNav:false,
-    //         bagToggle:true,
-    //         cart:{},
-    //     }
-    // },
-    // methods:{
-    //     getCart(){//取得購物車內容
-    //         const vm = this;
-    //         const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
-    //         vm.isLoading = true;
-    //         this.$http.get(url).then((response) => {
-    //             vm.cart = response.data.data;
-    //             console.log('取得購物車資料',response.data.data);
-    //             vm.isLoading = false;
-    //         })
-    //     },
-    //     addtoCart(id){//qty加入的數量
-    //         const vm = this;
-    //         const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`
-    //         vm.isLoading = true;
-    //         const cart ={
-    //             product_id:id,
-    //             qty:vm.num,
-    //         }
-    //         this.$http.post(url,{data:cart}).then((response) => {
-    //             console.log(response.data);
-    //             vm.getCart();
-    //             vm.isLoading = false;
-    //         });
-    //     },
-    // },
-    // created(){
-    //     this.getCart();
-    // }
+    data(){
+        return{
+            mobNav:false,
+            bagToggle:true,
+        }
+    },
+    methods:{
+        // getCart(){//取得購物車內容
+        //     const vm = this;
+        //     const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
+        //     vm.isLoading = true;
+        //     this.$http.get(url).then((response) => {
+        //         console.log('取得購物車資料',response);
+        //         vm.cart = response.data.data;
+        //         vm.$bus.$emit("cartnum:push", response.data.data.carts.length);
+        //         vm.$bus.$emit("cartitem:push", response.data.data.carts);
+        //         vm.isLoading = false;
+        //     })
+        // },
+    },
+    created(){
+        // this.getCart();
+    }
 }
 </script>
 

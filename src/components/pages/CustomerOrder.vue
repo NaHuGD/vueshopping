@@ -255,6 +255,7 @@ export default {
             })
         },
         deleteCart(id){
+            console.log(id);
             const vm = this;
             const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart/${id}`;
             vm.isLoading = true;
