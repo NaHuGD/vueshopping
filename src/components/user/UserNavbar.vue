@@ -19,7 +19,12 @@
           </a>
           <div>
             <div id="headerBagInfo" :class="{'bagActive':bagToggle}">
-              <div class="bagItem" v-for="(item,key) in CartItem.carts" :key="key">
+              <div class="text-center mb-3" v-if="CartItem.carts == ''">您的購物車是空的</div>
+              <div
+                class="bagItem"
+                v-for="(item,key) in CartItem.carts"
+                :key="key"
+              >
                 <div>
                   <img :src="item.product.imageUrl" width="50">
                   <div>
@@ -68,8 +73,9 @@ export default {
       isLoading: false,
       mobNav: false,
       bagToggle: true,
+      isAnimateOut: false,
       CartNumber: "",
-      CartItem: {},
+      CartItem: {}
     };
   },
   methods: {
@@ -95,14 +101,12 @@ export default {
     },
     cartItemDelete(item) {
       const vm = this;
-        vm.isLoading = true;
+      vm.isLoading = true;
       const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart/${
         item.id
       }`;
       this.$http.delete(url).then(response => {
         vm.getCart();
-        console.log("deleteid", item.id);
-        console.log("deleteitem", item);
         vm.isLoading = false;
       });
     }
@@ -117,11 +121,12 @@ export default {
       console.log("抓取購物車資訊", item);
       vm.getCartItem(item);
     });
-    vm.$bus.$on("bagToggle:push", function(item) { //新增後顯示購物車
+    vm.$bus.$on("bagToggle:push", function(item) {
+      //新增後顯示購物車
       vm.bagToggle = item;
-      setTimeout(() => {
-          vm.bagToggle = !vm.bagToggle;
-      },2000);
+      // setTimeout(() => {
+      //   vm.bagToggle = !vm.bagToggle;
+      // },1600);
     });
     this.getCart();
   }
