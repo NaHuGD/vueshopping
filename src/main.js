@@ -10,6 +10,9 @@ import VeeValidate from 'vee-validate'; //判斷資料是否輸入插件
 import VueI18n from 'vue-i18n';
 import zhTWValidate from 'vee-validate/dist/locale/zh_TW';
 
+import VueAwesomeSwiper from 'vue-awesome-swiper'
+import 'swiper/dist/css/swiper.css'
+
 import App from './App';
 import router from './router';
 import './bus'
@@ -26,6 +29,8 @@ Vue.use(VueI18n);
 Vue.component('Loading', Loading);//元件需要被啟用
 Vue.filter('currency',currencyFilter);
 Vue.filter('date',dateFilter);
+
+Vue.use(VueAwesomeSwiper);
 
 axios.defaults.withCredentials = true;//開啟跨域
 /* eslint-disable no-new */
@@ -58,18 +63,18 @@ router.beforeEach((to, from, next) => {
   }
 });
 
-scrollNav();
-function scrollNav() {
-  window.onload = function () {
-    let inner = document.querySelector('.inner');
-    window.addEventListener('scroll', function () {
-      if (window.scrollY === 0) {
-        inner.style = `margin:2rem auto 0 auto;`;
-      }
-      else {
-        inner.style = `margin:1rem auto 0 auto;`;
-      }
-    });
-  };
-}
+// scrollNav();
+// function scrollNav() {
+//   window.onload = function () {
+//     let inner = document.querySelector('.inner');
+//     window.addEventListener('scroll', function () {
+//       if (window.scrollY === 0) {
+//         inner.style = `margin:2rem auto 0 auto;`;
+//       }
+//       else {
+//         inner.style = `margin:1rem auto 0 auto;`;
+//       }
+//     });
+//   };
+// }
 

@@ -78,7 +78,7 @@ export default {
                 vm.order = response.data.order;
                 console.log(response);
                 vm.isLoading = false;
-            })
+            });
         },
         payOrder(){
             const vm = this;

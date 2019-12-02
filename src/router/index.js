@@ -15,6 +15,7 @@ import ShopInside from '@/components/pages/ShopInside';
 import InsideSame from '@/components/pages/InsideSame';
 import Discount from '@/components/pages/Discount';
 import CheckoutPage from '@/components/pages/CheckoutPage';
+import Confirm from '@/components/user/Confirm';
 
 Vue.use(Router);
 
@@ -28,6 +29,7 @@ export default new Router({
             path: '/', 
             name: 'User',
             component: User,
+            redirect: 'home',
             children: [
                 {   //首頁
                     path: 'home',
@@ -58,6 +60,11 @@ export default new Router({
                     path: 'checkout_page',
                     name: 'CheckoutPage',
                     component: CheckoutPage,
+                },
+                {   //確認結帳頁
+                    path: 'confirm/:orderId',
+                    name: 'Confirm',
+                    component: Confirm,
                 },
             ],
         },

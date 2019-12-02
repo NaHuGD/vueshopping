@@ -40,7 +40,9 @@
                         <button class="col-6 col-md-5"
                         @click.prevent="addtoCart(product.id,num)"
                         >加入購物車</button>
-                        <button class="col-5">直接購買</button>
+                        <button class="col-5"
+                        @click.prevent="buyNow(product.id)"
+                        >直接購買</button>
                     </div>
                     <h6 class="h5 mt-4">商品描述:</h6>
                     <ul class="ml-2">
@@ -111,9 +113,9 @@ export default {
             });
         },
         goPath(id){
-            console.log(id)
+            console.log(id);
             const vm = this;
-            vm.$router.push({path:`/inside_same/${id}`});
+            vm.$router.push({path:`/shop_inside/${id}`});
         },
         back(e){
             console.log(e);
@@ -137,6 +139,20 @@ export default {
                 vm.$bus.$emit("bagToggle:push", false);
                 vm.isLoading = false;
             });
+        },
+        buyNow(id){
+            console.log(id);
+            const vm = this;
+            const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`
+            const cart ={
+                product_id:id,
+                qty:vm.num,
+            }
+            this.$http.post(url,{data:cart}).then((response) => {
+                console.log(response.data); 
+                vm.getCart();
+            });
+            this.$router.push('/checkout_page');
         },
         getCart(){//取得購物車內容
             const vm = this;

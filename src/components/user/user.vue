@@ -19,23 +19,6 @@ export default {
             bagToggle:true,
         }
     },
-    methods:{
-        // getCart(){//取得購物車內容
-        //     const vm = this;
-        //     const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
-        //     vm.isLoading = true;
-        //     this.$http.get(url).then((response) => {
-        //         console.log('取得購物車資料',response);
-        //         vm.cart = response.data.data;
-        //         vm.$bus.$emit("cartnum:push", response.data.data.carts.length);
-        //         vm.$bus.$emit("cartitem:push", response.data.data.carts);
-        //         vm.isLoading = false;
-        //     })
-        // },
-    },
-    created(){
-        // this.getCart();
-    }
 }
 </script>
 
