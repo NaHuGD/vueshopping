@@ -1,8 +1,8 @@
 <template>
   <div>
     <loading :active.sync="isLoading"></loading>
-    <div id="checkProduct" class="main row col-10 col-sm-10 col-md-10">
-      <div class="col-lg-8">
+    <div id="checkProduct" v-if="CartItem.carts != ''" class="main row col-10 col-sm-10 col-md-10">
+      <div class="col-lg-8" >
         <table class="bagTitle">
           <tr class="row">
             <th>品名</th>
@@ -88,6 +88,11 @@
         </div>
       </div>
     </div>
+    <div class="main pb-2 col-10" v-else>
+      <p class="text-center h5">
+      您的購物車目前是空的!!
+      </p>
+    </div>
   </div>
 </template>
 <script>
@@ -107,11 +112,11 @@ export default {
       //取得購物車內容
       const vm = this;
       const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
-      // vm.isLoading = true;
+      vm.isLoading = true;
       this.$http.get(url).then(response => {
         console.log("取得購物車資料", response);
         vm.$bus.$emit("cartitem:push", response.data.data);
-        // vm.isLoading = false;
+        vm.isLoading = false;
       });
     },
     getCartItem(item) {
@@ -147,17 +152,17 @@ export default {
     },
     goCheckOut() {
       const vm = this;
+      window.scrollTo({
+        top: 0
+      });
       document.querySelector(".checkInfo").style = `border:3px solid #7c8ec9;`;
       document.querySelector(".checkInfo>i").style = `color:#7c8ec9;`;
       document.querySelector(".checkInfo>p").style = `color:#7c8ec9;`;
       document.querySelector(".checkSchedule>span").style = `
-        background:linear-gradient(90deg, #7c8ec9 50%, transparent 0%),
-        linear-gradient(90deg, #cecece 100%, transparent 100%)
-        `;
-      window.scrollTo({
-        top:0,
-      });
-    }
+      background:linear-gradient(90deg, #7c8ec9 50%, transparent 0%),
+      linear-gradient(90deg, #cecece 100%, transparent 100%)
+      `;
+    },
   },
   created() {
     const vm = this;
@@ -166,6 +171,6 @@ export default {
       vm.getCartItem(item);
     });
     this.getCart();
-  }
+  },
 };
 </script>

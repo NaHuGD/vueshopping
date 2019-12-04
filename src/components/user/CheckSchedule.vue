@@ -25,6 +25,10 @@
 <script>
 export default {
   name:"CheckSchedule",
+  data(){
+      return{
+      }
+  }
 }
 </script>
 

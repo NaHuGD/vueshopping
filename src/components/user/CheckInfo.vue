@@ -91,7 +91,6 @@ export default {
             console.log("訂單", response);
             if (response.data.success) {
               console.log('訂單確認建立 導頁至結帳畫面');
-              // vm.$router.push(`/customer_checkout/${response.data.orderId}`);
               vm.$router.push(`/confirm/${response.data.orderId}`);
             }
             vm.isLoading = false;
@@ -105,17 +104,7 @@ export default {
         }
       });
     },
-    // goCheckOut() {
-    //   document.querySelector(".checkOut").style = `border:3px solid #7c8ec9;`;
-    //   document.querySelector(".checkOut>i").style = `color:#7c8ec9;`;
-    //   document.querySelector(".checkOut>p").style = `color:#7c8ec9;`;
-    //   document.querySelector(".checkSchedule>span").style = `
-    //   background:linear-gradient(90deg, #7c8ec9 100%, transparent 0%),
-    //   linear-gradient(90deg, #cecece 100%, transparent 100%)
-    //   `;
-    //   window.scrollTo(0, 0);
-    // },
-  }
+  },
 };
 </script>
 

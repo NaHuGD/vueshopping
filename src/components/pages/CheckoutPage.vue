@@ -3,19 +3,14 @@
     <loading :active.sync="isLoading"></loading>
     <CheckSchedule/>
     <!-- <CheckProduct/> -->
-    <!-- <swiper :options="swiperCheckOut">
-      <swiper-slide class="swiper-no-swiping" :style="{height:getHeight+'px'}">
+    <swiper :options="swiperCheckOut">
+      <swiper-slide class="swiper-no-swiping">
         <CheckProduct/>
       </swiper-slide>
-      <swiper-slide class="swiper-no-swiping" :style="{height:getHeight+'px'}">
+      <swiper-slide class="swiper-no-swiping">
         <CheckInfo/>
       </swiper-slide>
-      <swiper-slide class="swiper-no-swiping" :style="{height:getHeight+'px'}">
-        <CheckOut/>
-      </swiper-slide>
-    </swiper> -->
-    <CheckProduct/>
-    <CheckInfo/>
+    </swiper>
   </div>
 </template>
 
@@ -23,7 +18,6 @@
 import CheckSchedule from "../user/CheckSchedule";
 import CheckProduct from "../user/CheckProduct";
 import CheckInfo from "../user/CheckInfo";
-import CheckOut from "../user/CheckOut";
 import "swiper/dist/css/swiper.css";
 import { swiper, swiperSlide } from "vue-awesome-swiper";
 
@@ -32,7 +26,6 @@ export default {
     CheckSchedule,
     CheckProduct,
     CheckInfo,
-    CheckOut,
   },
   data() {
     return {
@@ -43,27 +36,31 @@ export default {
         navigation: {
           nextEl: ".goCheckOut"
           // prevEl: ".swiper-button-prev",
-        }
+        },
+        observer:true,
+        observerParents:true,
+        height:'',
       },
-      getHeight:'',
     };
   },
   methods:{
   },
   created(){
     const vm = this;
-    // window.onresize=function(){
-    //   let checkoutPageHeight1 = document.querySelector('#checkoutPage').offsetHeight;
-    //   console.log('移動1',checkoutPageHeight1);
-    // }
-  },
-  mounted(){
-    const vm = this;
     window.onresize=function(){
       let checkoutPageHeight = document.querySelector('#checkoutPage').offsetHeight;
-      console.log('移動',checkoutPageHeight);
-      return vm.getHeight = checkoutPageHeight;
+      console.log('移動1',checkoutPageHeight);
+      vm.swiperCheckOut.height = checkoutPageHeight;
     }
+  },
+  mounted(){
+    // const vm = this;
+    // window.onresize=function(){
+    //   let checkoutPageHeight = document.querySelector('#checkoutPage').offsetHeight;
+    //   console.log('移動',checkoutPageHeight);
+    //   // return vm.getHeight = checkoutPageHeight;
+    //   vm.swiperCheckOut.height = checkoutPageHeight;
+    // }
   },
 };
 </script>
