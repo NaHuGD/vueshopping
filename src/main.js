@@ -47,7 +47,7 @@ router.beforeEach((to, from, next) => {
   console.log('next',next);
   if (to.meta.requiresAuth){ //進入的網址
     console.log('需要驗證');
-    const api = `${process.env.APIPATH}/api/user/check`
+    const api = `${process.env.APIPATH}/api/user/check`;
     axios.post(api).then((response) => {
       console.log(response.data)
       if (response.data.success) { //帳號登入成功時(true)

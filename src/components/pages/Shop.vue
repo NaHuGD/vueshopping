@@ -1,114 +1,296 @@
 <template>
-    <div id="shop">
-        <loading :active.sync="isLoading"></loading>
-        <div class="container">
-        <div class="menu text-center mb-4">
-            <div @click.prevent="getProducts">
-                <span>全部</span>
-                <span>All</span>
-            </div>
-            <div @click.prevent="categoryTop">
-                <span>上身</span>
-                <span>Top</span>
-            </div>
-            <div @click.prevent="categoryBottom">
-                <span>下身</span>
-                <span>Bottom</span>
-            </div>
-            <div @click.prevent="categoryFitting">
-                <span>配件</span>
-                <span>Fitting</span>
-            </div>
+  <div id="shop" class="pt150">
+    <loading :active.sync="isLoading"></loading>
+    <div class="container">
+      <div class="menuBar row mx-0 mb-4 p-0">
+        <div class="box1 p-0" @click.prevent="getAll()" :class="{'active':isMenuActive === '全部商品'}">
+          <img src="@/images/shop/01.png" alt ondragstart="return false;">
+          <p class>全部商品</p>
         </div>
-        <div class="subcate mb-3">商品頁</div>
-            <div class="row">
-                <div class="col-6 col-md-4 col-lg-3 mb-4" v-for="(item,key) in products" :key="key">
-                    <div class="border-0 shadow-sm shop_info" @click="goInside(item.id)">
-                        <img :src="item.imageUrl" :alt="item.title">
-                        <div class="item_info">
-                            <p class="pdname">{{item.title}}</p>
-                            <p class="price">
-                                <span class="old" v-if="item.origin_price != 0">NT.{{item.origin_price}}</span>
-                                NT.{{item.price}}
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div
+          class="box2 p-0"
+          @click.prevent="getProtective()"
+          :class="{'active':isMenuActive === '健身護具'}"
+        >
+          <img src="@/images/shop/02.png" alt ondragstart="return false;">
+          <p class>健身護具</p>
         </div>
+        <div
+          class="box3 p-0"
+          @click.prevent="getWhey()"
+          :class="{'active':isMenuActive === '優質乳清'}"
+        >
+          <img src="@/images/shop/03.png" alt ondragstart="return false;">
+          <p class>優質乳清</p>
+        </div>
+      </div>
+      <div class="subcate mb-3">{{isMenuActive}}</div>
+      <div class="row">
+        <div class="col-6 col-md-4 col-lg-3 mb-4" v-for="(item,key) in filteredProducts" :key="key">
+          <div class="border-0 shadow-sm shop_info" @click="goInside(item.id)">
+            <img :src="item.imageUrl" :alt="item.title">
+            <div class="item_info">
+              <p class="pdname">{{item.title}}</p>
+              <p class="price">
+                <span class="old" v-if="item.origin_price != 0">NT.{{item.origin_price}}</span>
+                NT.{{item.price}}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </template>
 
 <script>
-import $ from 'jquery';
+import $ from "jquery";
 
 export default {
-    data(){
-        return{
-            isLoading:false,
-            products:'',
-            pagination:'',
-            Top:[],
-            Bottom:[],
-            Fitting:[],
-            isOpacity:true,
-            category:'all',
-        }
+  data() {
+    return {
+      isLoading: false,
+      products: [],
+      isMenuActive: "全部商品",
+      searchId: ""
+    };
+  },
+  methods: {
+    getProducts(page = 1) {
+      //取得api資料
+      const vm = this;
+      const api = `${process.env.APIPATH}/api/${
+        process.env.CUSTOMPATH
+      }/products/all`;
+      vm.isLoading = true; //讀取資料時開起
+      this.$http.get(api).then(response => {
+        vm.products = response.data.products;
+        vm.isLoading = false; //完成後關閉loading功能
+      });
     },
-    computed:{
-
+    getAll() {
+      const vm = this;
+      vm.$router.push(`/shop/all`);
     },
-    methods:{
-        getProducts(page = 1){ //取得api資料
-            const vm = this;
-            const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/products/all`
-            console.log(process.env.APIPATH,process.env.CUSTOMPATH)
-            vm.isLoading = true;//讀取資料時開起
-            this.$http.get(api).then((response) => {
-                vm.products = response.data.products;
-                console.log(response);
-                vm.isLoading = false;//完成後關閉loading功能
-                // vm.pagination = response.data.pagination;
-            }); 
-        },
-        getCategory(page = 1){
-            const vm = this;
-            const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/products/all`
-            vm.isLoading = true;//讀取資料時開起
-            this.$http.get(api).then((response) => {
-                response.data.products.forEach(function(item,index,array) {
-                    if(item.category === '上衣'){
-                        vm.Top.push(item);
-                    }else if(item.category === '下身'){
-                        vm.Bottom.push(item);
-                    }else if(item.category === '配件'){
-                        vm.Fitting.push(item);
-                    }
-                    vm.isLoading = false;
-                });
-            });
-        },
-        categoryTop(){
-            const vm = this;
-            vm.products = vm.Top;
-        },
-        categoryBottom(){
-            const vm = this;
-            vm.products = vm.Bottom;
-        },
-        categoryFitting(){
-            const vm = this;
-            vm.products = vm.Fitting
-        },
-        goInside(id){
-            const vm = this;
-            vm.$router.push(`/shop_inside/${id}`);
-        },
+    getProtective() {
+      const vm = this;
+      vm.$router.push(`/shop/protective`);
     },
-    
-    created(){
-        this.getProducts();
-        this.getCategory();
+    getWhey() {
+      const vm = this;
+      vm.$router.push(`/shop/whey`);
+    },
+    goInside(id) {
+      const vm = this;
+      vm.$router.push(`/shop_inside/${id}`);
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
     }
-}
+  },
+  computed: {
+    filteredProducts() {
+      const vm = this;
+      const routeName = vm.$route.name;
+      console.log("route", vm.$route.name);
+      let filtered = "";
+      //判斷網頁顯示內容//
+      if (routeName === "All") {
+        vm.isMenuActive = "全部商品";
+        return vm.products;
+      } else if (routeName === "Protective") {
+        vm.isMenuActive = "健身護具";
+        filtered = this.products.filter(function(item){
+          return item.category === "護具";
+        });
+        return filtered;
+      } else if (routeName === "Whey") {
+        vm.isMenuActive = "優質乳清";
+        filtered = this.products.filter(function(item){
+          return item.category === "乳清";
+        });
+        return filtered;
+      }else{
+        filtered = this.products.filter(function(item){
+          return item.title.includes(vm.searchId);
+        });
+        vm.isMenuActive = `查詢有關"${vm.searchId}"的結果`;
+        return filtered;
+        console.log('搜尋',vm.searchId);
+      }
+    }
+  },
+  created() {
+    this.searchId = this.$route.params.id;
+    const vm = this;
+    vm.getProducts();
+    vm.$bus.$on("searchId:push", value => {
+      this.searchId = value;
+    });
+  },
+};
 </script>
+
+<style lang="scss" scoped>
+@import "@/assets/helpers/breakpoint.scss";
+
+/*shop*/
+#shop {
+  // .menu{
+  //     div{
+  //         @include mobile(){
+  //             font-size:.6em;
+  //             max-width:30px;
+  //         }
+  //         margin:.5rem;
+  //         font-weight:bold;
+  //         color:#000;
+  //         text-decoration:none;
+  //         display:inline-block;
+  //         border-bottom: 2px solid #808080;
+  //         border-width:.1rem;
+  //         height: 30px;
+  //         overflow: hidden;
+  //         span{
+  //             display:block;
+  //             display: block;
+  //             transition: all 0.5s ease;
+  //             line-height:30px;
+  //         }
+  //     }
+  //     div:hover :nth-child(1){
+  //         margin-top: -30px;
+  //     }
+  //     :hover{
+  //         opacity:0.7;
+  //     }
+  // }
+  .menuBar {
+    .active {
+      img {
+        filter: grayscale(0%);
+      }
+      p {
+        opacity: 1;
+      }
+    }
+    cursor: pointer;
+    position: relative;
+    flex-wrap: nowrap;
+    & > div {
+      img {
+        transition: 0.6s;
+        filter: grayscale(100%);
+      }
+      p {
+        transition: 0.6s;
+        opacity: 0;
+      }
+    }
+    .box1 {
+      position: relative;
+      // flex: 0 0 33.333333%;
+      // max-width: 33.333333%;
+      img {
+        max-width: 434px;
+        width: 125%;
+      }
+      p {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(0%, -50%);
+        color: #fff;
+        font-weight: bold;
+        @include mobile() {
+          left: 20%;
+          transform: translate(0%, -50%);
+        }
+      }
+    }
+    .box2 {
+      position: relative;
+      transform: translateX(-11.5%);
+      img {
+        max-width: 496px;
+        width: 125%;
+      }
+      p {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(0%, -50%);
+        color: #fff;
+        font-weight: bold;
+        @include mobile() {
+          left: 40%;
+        }
+      }
+    }
+    .box3 {
+      position: relative;
+      transform: translateX(-23%);
+      img {
+        max-width: 434px;
+        width: 125%;
+      }
+      p {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(50%, -50%);
+        color: #fff;
+        font-weight: bold;
+        @include mobile() {
+          left: 40%;
+          transform: translate(0%, -50%);
+        }
+      }
+    }
+    & > div:hover {
+      img {
+        filter: grayscale(0%);
+      }
+      p {
+        opacity: 1;
+      }
+    }
+  }
+  .shop_info {
+    cursor: pointer;
+    overflow: hidden;
+    img {
+      width: 100%;
+      vertical-align: bottom;
+    }
+    img:hover {
+      transition: 0.6s;
+      transform: scale(1.15);
+    }
+  }
+  .activeOpacity {
+    opacity: 0.5;
+  }
+  .item_info {
+    position: sticky;
+    z-index: 1;
+    background: #fff;
+    .pdname {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      text-align: left;
+      padding: 8px 0;
+    }
+    .price {
+      span {
+        letter-spacing: 0;
+        color: #666;
+        margin-right: 1em;
+        text-decoration: line-through;
+      }
+    }
+  }
+}
+</style>

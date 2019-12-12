@@ -7,26 +7,27 @@ import Login from '@/components/pages/Login';
 import Products from '@/components/pages/Products';
 import Orders from '@/components/pages/Orders';
 import Coupons from '@/components/pages/Coupons';
-import  CustomerOrder from '@/components/pages/CustomerOrder';
-import  CustomerCheckout from '@/components/pages/CustomerCheckout';
-import  Home from '@/components/pages/Home';
-import  Shop from '@/components/pages/Shop';
+import CustomerOrder from '@/components/pages/CustomerOrder';
+import CustomerCheckout from '@/components/pages/CustomerCheckout';
+import Home from '@/components/pages/Home';
+import Shop from '@/components/pages/Shop';
 import ShopInside from '@/components/pages/ShopInside';
-import InsideSame from '@/components/pages/InsideSame';
 import Discount from '@/components/pages/Discount';
-import CheckoutPage from '@/components/pages/CheckoutPage';
+// import CheckoutPage from '@/components/pages/CheckoutPage';
+import CheckProduct from '@/components/user/CheckProduct';
+import CheckInfo from '@/components/user/CheckInfo';
 import Confirm from '@/components/user/Confirm';
 
 Vue.use(Router);
 
 export default new Router({
-    routes:[
+    routes: [
         {
-            path:'*', //輸入路徑不是定義的path
-            redirect:'home', //導頁致官網
+            path: '*', //輸入路徑不是定義的path
+            redirect: 'home', //導頁致官網
         },
         {
-            path: '/', 
+            path: '/',
             name: 'User',
             component: User,
             redirect: 'home',
@@ -40,26 +41,69 @@ export default new Router({
                     path: 'shop',
                     name: 'Shop',
                     component: Shop,//載入樣式
+                    redirect: { name: 'All' },
+                    children: [
+                        {
+                            path: 'all', //護具分頁
+                            name: 'All',
+                            component: Shop,//載入樣式
+                        },
+                        {
+                            path: 'protective', //護具分頁
+                            name: 'Protective',
+                            component: Shop,//載入樣式
+                        },
+                        {
+                            path: 'whey', //乳清分頁
+                            name: 'Whey',
+                            component: Shop,//載入樣式
+                        },
+                    ]
+                },
+                {
+                    path: 'search', //搜尋商品
+                    name: 'ShopSearch',
+                    component: Shop,//載入樣式
+                    redirect: { name: 'All' },
+                    children: [
+                        {
+                            path: ':id', //搜尋商品
+                            name: 'ShopSearch',
+                            component: Shop,//載入樣式
+                        }
+                    ]
                 },
                 {   //商品內頁
-                    path: '/shop_inside/:itemId',
+                    path: 'shop_inside',
                     name: 'ShopInside',
                     component: ShopInside,
-                },
-                {   //商品內頁
-                    path: '/inside_same/:itemId',
-                    name: 'InsideSame',
-                    component: InsideSame,
+                    children: [
+                        {
+                            path: ':itemId',
+                            name: 'ShopInside',
+                            component: ShopInside,
+                        }
+                    ]
                 },
                 {   //抽獎頁
                     path: 'discount',
                     name: 'Discount',
                     component: Discount,
                 },
-                {   //結帳頁
-                    path: 'checkout_page',
-                    name: 'CheckoutPage',
-                    component: CheckoutPage,
+                // {   //結帳頁
+                //     path: 'checkout_page',
+                //     name: 'CheckoutPage',
+                //     component: CheckoutPage,
+                // },
+                {   //確認商品
+                    path: 'checkProduct',
+                    name: 'CheckProduct',
+                    component: CheckProduct,
+                },
+                {   //確認資訊
+                    path: 'checkInfo',
+                    name: 'CheckInfo',
+                    component: CheckInfo,
                 },
                 {   //確認結帳頁
                     path: 'confirm/:orderId',

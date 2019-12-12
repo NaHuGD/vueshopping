@@ -28,3 +28,15 @@
         @content
     }
 };
+
+$color-red:#ee4143;
+$color-navyBlue:#4b4b65;
+$color-aid:#7c8ec9;
+$color-gray:#d4d4d4;
+$color-bg:rgb(235, 235, 235);
+$color-bg-aid:#f8f8f8;
+
+@mixin a-text{
+    color:white;
+    text-decoration:none;
+}

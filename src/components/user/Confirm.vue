@@ -1,13 +1,13 @@
 <template>
-  <div class="pt150">
+  <div>
     <loading :active.sync="isLoading"></loading>
     <CheckSchedule/>
     <form @submit.prevent="paying">
-      <div class="pt150 m-auto col-10">
+      <div class="mx-auto mb-4 col-10 ">
         <div id="Confirm">
           <div class="row p-2 p-md-4">
             <span class="col-12 col-md-6 pb-2 pb-md-0">
-              <p>訂購人:YanKai</p>
+              <p>訂購人:{{order.user.name}}</p>
             </span>
             <span class="col-12 col-md-6 text-md-right">
               <p>訂購日期:2019/08/78</p>

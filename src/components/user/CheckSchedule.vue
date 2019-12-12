@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="row w-100 m-auto">
-      <div class="col-sm-8 col-10 m-auto">
+    <div class="row w-100 m-auto pt150">
+      <div class="col-sm-8 col-10 m-auto" style="height:140px;">
         <div class="checkSchedule">
           <span></span>
           <div class="checkProduct">
@@ -34,13 +34,6 @@ export default {
 
 <style lang="scss">
 @import "@/assets/helpers/breakpoint.scss";
-
-$color-main:#ee4143;
-$color-aid:#7c8ec9;
-$color-gray:#cecece;
-$color-bg:rgb(235, 235, 235);
-$color-bg-aid:#f8f8f8;
-
 .checkSchedule{
     position:relative;
     transition:2s;

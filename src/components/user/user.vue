@@ -5,13 +5,16 @@
         <main>
             <router-view></router-view>
         </main>
+        <UserFooter/>
     </div>
 </template>
 <script>
 import UserNavbar from './UserNavbar'
+import UserFooter from './UserFooter'
 export default {
     components:{
         UserNavbar,
+        UserFooter,
     },
     data(){
         return{

@@ -1,8 +1,9 @@
 <template>
   <div>
+    <CheckSchedule/>
     <loading :active.sync="isLoading"></loading>
     <div id="checkProduct" v-if="CartItem.carts != ''" class="main row col-10 col-sm-10 col-md-10">
-      <div class="col-lg-8" >
+      <div class="col-lg-8">
         <table class="bagTitle">
           <tr class="row">
             <th>品名</th>
@@ -89,15 +90,17 @@
       </div>
     </div>
     <div class="main pb-2 col-10" v-else>
-      <p class="text-center h5">
-      您的購物車目前是空的!!
-      </p>
+      <p class="text-center h5">您的購物車目前是空的!!</p>
     </div>
   </div>
 </template>
 <script>
+import CheckSchedule from "./CheckSchedule";
+
 export default {
-  name: "CheckProduct",
+  components: {
+    CheckSchedule
+  },
   data() {
     return {
       isLoading: false,
@@ -152,17 +155,12 @@ export default {
     },
     goCheckOut() {
       const vm = this;
+      this.$router.push("/checkInfo");
       window.scrollTo({
-        top: 0
+        top: 0,
+        behavior: "smooth"
       });
-      document.querySelector(".checkInfo").style = `border:3px solid #7c8ec9;`;
-      document.querySelector(".checkInfo>i").style = `color:#7c8ec9;`;
-      document.querySelector(".checkInfo>p").style = `color:#7c8ec9;`;
-      document.querySelector(".checkSchedule>span").style = `
-      background:linear-gradient(90deg, #7c8ec9 50%, transparent 0%),
-      linear-gradient(90deg, #cecece 100%, transparent 100%)
-      `;
-    },
+    }
   },
   created() {
     const vm = this;
@@ -171,6 +169,251 @@ export default {
       vm.getCartItem(item);
     });
     this.getCart();
-  },
+  }
 };
 </script>
+
+<style lang="scss" scoped>
+@import "@/assets/helpers/breakpoint.scss";
+#checkProduct {
+  .main {
+    margin: 0 auto 3rem auto;
+    width: 100%;
+    position: relative;
+    box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.4);
+    padding: 15px 15px 0 0;
+    @include mobile() {
+      margin-bottom: 3rem;
+      box-shadow: none;
+    }
+    @include pad() {
+      padding: 15px 0 0 0;
+    }
+    & > div:nth-child(1) {
+      @include mobile() {
+        padding: 0;
+      }
+    }
+    // .bagTitle{
+    //     background:$color-bg-aid;
+    //     margin-bottom: 1rem;
+    //     display:block;
+    //     padding:.75rem;
+    //     tr{
+    //         padding-left:30px;
+    //         @include mobile(){
+    //             padding-left:5px;
+    //         }
+    //     }
+    //     th{
+    //         align-items: center;
+    //     }
+    //     th:nth-child(1){
+    //         flex: 0 0 23.5%;
+    //         max-width: 23.5%;
+    //         @include desktop(){
+    //             flex: 0 0 20%;
+    //             max-width: 20%;
+    //         }
+    //         @include pad(){
+    //             flex: 0 0 21%;
+    //             max-width: 21%;
+    //         }
+    //         @include mobile(){
+    //             flex: 0 0 24%;
+    //             max-width: 24%;
+    //         }
+    //         @include iphone5(){
+    //             flex: 0 0 24%;
+    //             max-width: 24%;
+    //         }
+    //     }
+    //     th:nth-child(2){
+    //         flex: 0 0 21%;
+    //         max-width: 21%;
+    //         @include mobile(){
+    //             flex: 0 0 18%;
+    //             max-width: 18%;
+    //         }
+    //     }
+    //     th:nth-child(3){
+    //         flex: 0 0 21%;
+    //         max-width: 21%;
+    //         @include mobile(){
+    //             flex: 0 0 19%;
+    //             max-width: 19%;
+    //         }
+    //     }
+    //     th:nth-child(4){
+    //         flex: 0 0 20.5%;
+    //         max-width: 20.5%;
+    //     }
+    //     th:nth-child(5){
+    //         flex: 0 0 13%;
+    //         max-width: 13%;
+    //     }
+    // }
+    .sale {
+      border: 1px solid #28a745;
+      &::before {
+        border-right: 1px solid #28a745;
+        @include mobile() {
+          border: 0;
+        }
+      }
+    }
+    .bagInfo {
+      position: relative;
+      margin-bottom: 1rem;
+      width: 100%;
+      height: 190px;
+      background: $color-bg-aid;
+      // box-shadow:0px 1px 3px 1px rgba(0, 0, 0, 0.1);
+      @include iphone5() {
+        height: 140px;
+      }
+      img {
+        max-width: 100px;
+        @include mobile() {
+          width: 100%;
+        }
+      }
+      &::before {
+        content: "";
+        position: absolute;
+        transform: translate(-50%, -50%);
+        top: 50%;
+        width: 30px;
+        height: 30px;
+        background: $color-bg;
+        border-radius: 100%;
+        @include mobile() {
+          width: 0;
+        }
+      }
+      & > tr:nth-child(1) {
+        padding-left: 25px;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        align-items: center;
+        width: 100%;
+        @include mobile() {
+          padding-left: 5px;
+        }
+        td:nth-child(6) {
+          @include mobile() {
+            padding: 0 5px 0 0;
+          }
+        }
+      }
+    }
+    .priceInfo {
+      background: $color-bg-aid;
+      margin-bottom: 1rem;
+      padding-bottom: 1rem;
+      width: 100%;
+      // height: 590px;
+      @include lg() {
+        margin: 0 15px 15px 15px;
+      }
+      &::after {
+        content: "";
+        background: $color-bg;
+        position: absolute;
+        top: 56%;
+        transform: translateX(-50%);
+        width: 1.6rem;
+        height: 1.8rem;
+        border-radius: 99%;
+        left: 0;
+        @include desktop() {
+          top: 52.5%;
+        }
+        @include pad() {
+          top: 57%;
+        }
+        @include iphoneX() {
+          top: 52.5%;
+        }
+      }
+      &::before {
+        content: "";
+        background: $color-bg;
+        position: absolute;
+        top: 56%;
+        transform: translateX(50%);
+        width: 1.6rem;
+        height: 1.8rem;
+        border-radius: 99%;
+        right: 0;
+        @include desktop() {
+          top: 52.5%;
+        }
+        @include pad() {
+          top: 57%;
+        }
+        @include iphoneX() {
+          top: 52.5%;
+        }
+      }
+      .title {
+        font-family: "微軟正黑體", "Microsoft JhengHei", "Segoe UI Semibold",
+          "Segoe UI", "Lucida Grande", Verdana, Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        font-size: 1.5rem;
+        @include pad() {
+          font-size: 1.2rem;
+        }
+      }
+    }
+    .goCheckOut {
+      width: 100%;
+      background: #000;
+      color: #fff;
+      display: block;
+      padding: 5% 0;
+      &::before {
+        content: "";
+        border: 3px dotted black;
+      }
+    }
+    .coupons {
+      border-top: 8px dotted $color-bg;
+      margin-top: 3rem;
+      .barcode {
+        img {
+          width: 100%;
+        }
+      }
+      .couponsInfo {
+        margin: 0.5rem auto 0 auto;
+        border-bottom: 1px solid black;
+        border-width: 80%;
+        input:nth-child(1) {
+          border: 0;
+          background: transparent;
+          padding: 0;
+          &:focus {
+            outline: none;
+          }
+        }
+        .applyCoupons {
+          padding: 0;
+          font-size: 1.5rem;
+          transition: 0.6s;
+          &:focus {
+            outline: none;
+          }
+          &:hover {
+            padding-left: 20px;
+          }
+        }
+      }
+      .couponCode {
+        letter-spacing: 5px;
+      }
+    }
+  }
+}
+</style>
