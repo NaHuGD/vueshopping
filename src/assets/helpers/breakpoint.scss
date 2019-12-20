@@ -31,12 +31,22 @@
 
 $color-red:#ee4143;
 $color-navyBlue:#4b4b65;
-$color-aid:#7c8ec9;
+$color-green:#235a55;
+$color-lightPink:#f6d7d1;
+$color-lightYellow:#faead1;
 $color-gray:#d4d4d4;
-$color-bg:rgb(235, 235, 235);
-$color-bg-aid:#f8f8f8;
+$color-bg:#faead1;
+$color-bgActive:rgba(0,0,0,.4);
+// $color-aid:#7c8ec9;
 
 @mixin a-text{
-    color:white;
     text-decoration:none;
+}
+@mixin fontStyle{
+    font-family: "\5FAE\8EDF\6B63\9ED1\9AD4", "Microsoft JhengHei", "Segoe UI Semibold", "Segoe UI", "Lucida Grande", Verdana, Arial, Helvetica, sans-serif;
+}
+@mixin focusNone {
+    &:focus {
+      outline: none;
+    }
 }

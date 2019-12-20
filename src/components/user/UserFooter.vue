@@ -2,17 +2,17 @@
   <footer id="footer">
     <div class="info row">
       <div class="contact col-sm-6">
-        <span>聯絡我們</span>
+        <span>聯絡KaiZ</span>
         <div id="map"></div>
       </div>
       <div class="about col-sm-4 py-sm-0 py-3">
-        <span>關於我們</span>
+        <span>關於KaiZ</span>
         <div>
           <p>Follow all the topics you care about, and we’ll deliver the best stories for you to your homepage and inbox. Explore</p>
         </div>
       </div>
       <div class="follow col p-sm-0">
-        <span>追蹤我們</span>
+        <span>追蹤KaiZ</span>
         <router-link to="/" tag="a">
           <i class="fab fa-twitter-square"></i>Twitter
         </router-link>
@@ -226,8 +226,9 @@ export default {
 <style lang="scss" scoped>
 @import "@/assets/helpers/breakpoint.scss";
 #footer {
-  background: #4b4b65;
+  background: $color-green;
   position: relative;
+  z-index:0;
   bottom: 0;
   padding: 1rem 5rem 0 5rem;
   @include mobile() {
@@ -256,6 +257,7 @@ export default {
     p {
       color: #d4d4d4;
       padding: 5px 0;
+      line-height: 1.3rem;
     }
   }
   .follow {

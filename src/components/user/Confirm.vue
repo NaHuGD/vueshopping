@@ -3,7 +3,7 @@
     <loading :active.sync="isLoading"></loading>
     <CheckSchedule/>
     <form @submit.prevent="paying">
-      <div class="mx-auto mb-4 col-10 ">
+      <div class="mx-auto mb-4 col-10">
         <div id="Confirm">
           <div class="row p-2 p-md-4">
             <span class="col-12 col-md-6 pb-2 pb-md-0">
@@ -27,20 +27,20 @@
           </div>
           <div class="info py-2">
             <div class="row text-center p-2">
-              <p class="col">收件人姓名 :</p>
-              <p class="col">{{order.user.name}}</p>
+              <p class="col-7 p-0">收件人姓名 :</p>
+              <p class="col p-0">{{order.user.name}}</p>
             </div>
             <div class="row text-center p-2">
-              <p class="col">收件人電話 :</p>
-              <p class="col">{{order.user.tel}}</p>
+              <p class="col-7 p-0">收件人電話 :</p>
+              <p class="col p-0">{{order.user.tel}}</p>
             </div>
             <div class="row text-center p-2">
-              <p class="col">收件人地址 :</p>
-              <p class="col">{{order.user.addres}}</p>
+              <p class="col-7 p-0">收件人地址 :</p>
+              <p class="col p-0">{{order.user.addres}}</p>
             </div>
             <div class="row text-center p-2">
-              <p class="col">收件人郵件 :</p>
-              <p class="col">{{order.user.email}}</p>
+              <p class="col-7 p-0">收件人信箱 :</p>
+              <p class="col p-0">{{order.user.email}}</p>
             </div>
           </div>
           <div class="total py-2">
@@ -58,7 +58,7 @@
             </div>
             <div class="row text-center p-2">
               <p class="col">小計</p>
-              <p class="col">$320</p>
+              <p class="col">{{order.total + 80 | currency}}</p>
             </div>
           </div>
           <div class="pt-3">
@@ -141,23 +141,20 @@ export default {
         vm.isLoading = false;
         vm.payingCheck = false;
       }
-    },
+    }
   },
   created() {
     this.orderId = this.$route.params.orderId;
     this.getOrder();
   },
-  mounted(){
-    document.querySelector(".checkOut").style = `border:3px solid #7c8ec9;`;
-    document.querySelector(".checkOut>i").style = `color:#7c8ec9;`;
-    document.querySelector(".checkOut>p").style = `color:#7c8ec9;`;
-    document.querySelector(".checkInfo").style = `border:3px solid #7c8ec9;`;
-    document.querySelector(".checkInfo>i").style = `color:#7c8ec9;`;
-    document.querySelector(".checkInfo>p").style = `color:#7c8ec9;`;
-    document.querySelector(".checkSchedule>span").style = `
-    background:linear-gradient(90deg, #7c8ec9 100%, transparent 0%),
-    linear-gradient(90deg, #cecece 100%, transparent 100%)
-    `;
+  mounted() {
+    document.querySelector(".checkOut").style = `border:3px solid #235a55;`;
+    document.querySelector(".checkOut>i").style = `color:#235a55;`;
+    document.querySelector(".checkOut>p").style = `color:#235a55;`;
+    document.querySelector(".checkInfo").style = `border:3px solid #235a55;`;
+    document.querySelector(".checkInfo>i").style = `color:#235a55;`;
+    document.querySelector(".checkInfo>p").style = `color:#235a55;`;
+    document.querySelector(".checkSchedule>span").classList.add('scheduleConfirmAnimation');
   }
 };
 </script>
@@ -165,30 +162,6 @@ export default {
 <style lang="scss" secoped>
 @import "@/assets/helpers/breakpoint.scss";
 
-// .checkSchedule {
-//   & > span {
-//     background: linear-gradient(90deg, #7c8ec9 100%, transparent 0%),
-//       linear-gradient(90deg, #cecece 100%, transparent 100%) !important;
-//   }
-//   .checkInfo {
-//     border: 3px solid #7c8ec9 !important;
-//     & > i {
-//       color: #7c8ec9 !important;
-//     }
-//     & > p {
-//       color: #7c8ec9 !important;
-//     }
-//   }
-//   .checkOut {
-//     border: 3px solid #7c8ec9 !important;
-//     & > i {
-//       color: #7c8ec9 !important;
-//     }
-//     & > p {
-//       color: #7c8ec9 !important;
-//     }
-//   }
-// }
 #Confirm {
   background: #fff;
   padding: 15px;

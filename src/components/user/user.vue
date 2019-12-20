@@ -5,21 +5,23 @@
         <main>
             <router-view></router-view>
         </main>
+        <UserGotop/>
         <UserFooter/>
     </div>
 </template>
 <script>
 import UserNavbar from './UserNavbar'
+import UserGotop from './UserGotop'
 import UserFooter from './UserFooter'
 export default {
     components:{
         UserNavbar,
+        UserGotop,
         UserFooter,
     },
     data(){
         return{
-            mobNav:false,
-            bagToggle:true,
+
         }
     },
 }

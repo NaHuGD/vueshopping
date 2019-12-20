@@ -26,16 +26,20 @@
       </div>
       <div class="subcate mb-3">{{isMenuActive}}</div>
       <div class="row">
-        <div class="col-6 col-md-4 col-lg-3 mb-4" v-for="(item,key) in filteredProducts" :key="key">
+        <div class="col-6 col-md-4 col-lg-3 mb-4" v-for="(item,key) in filteredProducts" :key="key" :class="{'soldOutStyle':item.is_enabled === 0}">
           <div class="border-0 shadow-sm shop_info" @click="goInside(item.id)">
+            <span class="sale_style" v-if="item.origin_price != 0">SALE</span>
             <img :src="item.imageUrl" :alt="item.title">
-            <div class="item_info">
-              <p class="pdname">{{item.title}}</p>
-              <p class="price">
-                <span class="old" v-if="item.origin_price != 0">NT.{{item.origin_price}}</span>
-                NT.{{item.price}}
-              </p>
-            </div>
+          </div>
+          <div class="item_info" @click="goInside(item.id)">
+            <p class="pdname">{{item.title}}</p>
+            <p class="price">
+              <span :class="{'saleFont':item.origin_price != 0}">{{item.price | currency}}</span>
+              <span class="old" v-if="item.origin_price != 0">{{item.origin_price | currency}}</span>
+            </p>
+          </div>
+          <div class="soldOut" v-if="item.is_enabled === 0">
+            <p>SOLD OUT</p>
           </div>
         </div>
       </div>
@@ -101,23 +105,23 @@ export default {
         return vm.products;
       } else if (routeName === "Protective") {
         vm.isMenuActive = "健身護具";
-        filtered = this.products.filter(function(item){
+        filtered = this.products.filter(function(item) {
           return item.category === "護具";
         });
         return filtered;
       } else if (routeName === "Whey") {
         vm.isMenuActive = "優質乳清";
-        filtered = this.products.filter(function(item){
+        filtered = this.products.filter(function(item) {
           return item.category === "乳清";
         });
         return filtered;
-      }else{
-        filtered = this.products.filter(function(item){
+      } else {
+        filtered = this.products.filter(function(item) {
           return item.title.includes(vm.searchId);
         });
         vm.isMenuActive = `查詢有關"${vm.searchId}"的結果`;
         return filtered;
-        console.log('搜尋',vm.searchId);
+        console.log("搜尋", vm.searchId);
       }
     }
   },
@@ -128,7 +132,7 @@ export default {
     vm.$bus.$on("searchId:push", value => {
       this.searchId = value;
     });
-  },
+  }
 };
 </script>
 
@@ -258,39 +262,76 @@ export default {
     }
   }
   .shop_info {
+    @include fontStyle;
     cursor: pointer;
     overflow: hidden;
     img {
       width: 100%;
       vertical-align: bottom;
+      transition: 0.6s;
     }
     img:hover {
-      transition: 0.6s;
-      transform: scale(1.15);
+      transform: scale(1.1);
     }
   }
   .activeOpacity {
     opacity: 0.5;
   }
-  .item_info {
-    position: sticky;
+  .sale_style {
+    position: absolute;
     z-index: 1;
-    background: #fff;
+    right: 5px;
+    top: 5px;
+    transform: rotate(40deg);
+    background: $color-red;
+    color: white;
+    border-radius: 5px;
+    padding: 5px;
+  }
+  .item_info {
+    cursor: pointer;
     .pdname {
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
       text-align: left;
-      padding: 8px 0;
+      padding: 0.8rem 0;
+      font-weight: bold;
     }
     .price {
-      span {
+      .saleFont {
+        color: $color-red;
+        font-weight: bold;
+      }
+      .old {
         letter-spacing: 0;
         color: #666;
-        margin-right: 1em;
+        margin-left: 0.5rem;
+        font-size: 0.8rem;
         text-decoration: line-through;
       }
     }
+  }
+  .soldOut {
+    display: flex;
+    position: absolute;
+    z-index: 1;
+    top: -2%;
+    left: 0%;
+    width: 100%;
+    height: 102%;
+    justify-content: center;
+    align-items: center;
+    p {
+      color: #fff;
+      font-weight: bold;
+      text-align: center;
+      padding: 15px;
+      border:2px solid #fff;
+    }
+  }
+  .soldOutStyle{
+    filter: grayscale(.8);
   }
 }
 </style>

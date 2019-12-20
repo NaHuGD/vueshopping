@@ -18,7 +18,7 @@
                 v-model="form.user.name"
                 v-validate="'required'"
               >
-              <span class="text-danger" v-if="errors.has('name')">請輸入姓名</span>
+              <span class="text-danger mt-2 d-block" v-if="errors.has('name')">請輸入姓名</span>
             </div>
             <div class="col-12 col-md-6">
               <label for="userPhone" class="py-3">收件人手機</label>
@@ -31,7 +31,7 @@
                 v-model="form.user.tel"
                 v-validate="'required|digits:10'"
               >
-              <span class="text-danger" v-if="errors.has('tel')">請輸入手機10碼</span>
+              <span class="text-danger mt-2 d-block" v-if="errors.has('tel')">請輸入手機10碼</span>
             </div>
           </div>
           <div>
@@ -44,7 +44,7 @@
               name="email"
               v-validate="'required|email'"
             >
-            <span class="text-danger" v-if="errors.has('email')">請輸入正確格式Email</span>
+            <span class="text-danger mt-2 d-block" v-if="errors.has('email')">請輸入正確格式Email</span>
           </div>
           <div>
             <label class="py-3">運送方式</label>
@@ -121,22 +121,22 @@ export default {
       });
     }
   },
-  mounted(){
-    document.querySelector(".checkInfo").style = `border:3px solid #7c8ec9;`;
-      document.querySelector(".checkInfo>i").style = `color:#7c8ec9;`;
-      document.querySelector(".checkInfo>p").style = `color:#7c8ec9;`;
-      document.querySelector(".checkSchedule>span").style = `
-      background:linear-gradient(90deg, #7c8ec9 50%, transparent 0%),
-      linear-gradient(90deg, #cecece 100%, transparent 100%)
-      `;
+  mounted() {
+    document.querySelector(".checkInfo").style = `border:3px solid #235a55`;
+    document.querySelector(".checkInfo>i").style = `color:#235a55`;
+    document.querySelector(".checkInfo>p").style = `color:#235a55`;
+    document
+      .querySelector(".checkSchedule>span")
+      .classList.add("scheduleInfoAnimation");
   }
 };
 </script>
 
 <style lang="scss" secoped>
 @import "@/assets/helpers/breakpoint.scss";
+
 #checkInfo {
-  color: #7c8ec9;
+  color: $color-green;
   .main {
     label,
     h4 {
@@ -145,47 +145,109 @@ export default {
     background: #fff;
     padding: 18px;
     border-radius: 8px;
-    box-shadow: 0px 1px 2px 2px #7c8ec97e;
+    box-shadow: 0px 1px 2px 2px $color-green;
     input,
     select {
       background: transparent;
-      border: 1px solid #7c8ec9;
+      border: 1px solid $color-green;
       border-radius: 5px;
       height: 35px;
     }
     textarea {
       background: transparent;
-      border: 1px solid #7c8ec9;
+      border: 1px solid $color-green;
       border-radius: 5px;
       height: 160px;
       padding-top: 10px;
     }
   }
   .CheckOut {
-    cursor:pointer;
+    cursor: pointer;
+    font-weight: bold;
     display: block;
     margin: 0 auto;
     position: relative;
-    width: 40%;
-    padding: 20px 0;
-    border-radius: 6rem;
-    background: linear-gradient(90deg, #aabaeb 0%, transparent 50%),
-      linear-gradient(90deg, #7c8ec9 100%, transparent 100%);
+    width: 20%;
+    padding: 15px 0;
+    border-radius: 1rem;
+    background:$color-green;
     color: #fff;
     letter-spacing: 0.3rem;
+    animation-iteration-count: infinite;
+    animation-duration: 1.5s;
     transition: 0.4s;
     i {
       transition: 0.4s;
     }
     @include mobile() {
-      width: 90%;
+      width: 40%;
     }
     @include pad() {
-      width: 70%;
+      width: 40%;
     }
   }
   .CheckOut:hover {
-    opacity: 0.8;
+    // animation-name: buttonStyle;
+  }
+
+  @keyframes buttonStyle {
+    0% {
+      background: repeating-linear-gradient(
+        45deg,
+        #235a55 10%,
+        #235a558c 0,
+        #235a558c 20%,
+        #235a55 0,
+        #235a55 30%,
+        #235a558c 0
+      );
+    }
+    25% {
+      background: repeating-linear-gradient(
+        45deg,
+        #235a55 20%,
+        #235a558c 0,
+        #235a558c 30%,
+        #235a55 0,
+        #235a55 40%,
+        #235a558c 0
+      );
+    }
+    50% {
+      background: repeating-linear-gradient(
+        45deg,
+        #235a55 30%,
+        #235a558c 0,
+        #235a558c 40%,
+        #235a55 0,
+        #235a55 50%,
+        #235a558c 0
+      );
+    }
+    75% {
+      background: repeating-linear-gradient(
+        45deg,
+        #235a55 40%,
+        #235a558c 0,
+        #235a558c 50%,
+        #235a55 0,
+        #235a55 60%,
+        #235a558c 0
+      );
+    }
+    100% {
+      background: repeating-linear-gradient(
+        45deg,
+        #235a55 50%,
+        #235a558c 0,
+        #235a558c 60%,
+        #235a55 0,
+        #235a55 70%,
+        #235a558c 0
+      );
+    }
+  }
+  .CheckOut:hover {
     i {
       transform: translateX(10px);
     }
