@@ -95,7 +95,7 @@
           @click.prevent="goNews"
           :class="{'menuActive':isMenuActive === '健康資訊',menuActiveFn}"
         >健康資訊</button>
-        <button>會員登入</button>
+        <router-link to="/login" tag="button">會員登入</router-link>
         <button>其他</button>
       </div>
       <button class="close" @click.prevent="mobNavFn">
@@ -217,7 +217,8 @@ export default {
         routeName === "All" ||
         routeName === "Protective" ||
         routeName === "Whey" ||
-        routeName === "ShopSearch"
+        routeName === "ShopSearch" ||
+        routeName === "ShopInside"
       ) {
         return (vm.isMenuActive = "商品列表");
       } else if (routeName === "Discount") {

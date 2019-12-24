@@ -11,10 +11,10 @@
               <input
                 placeholder="姓名"
                 type="text"
-                class="col"
                 id="userName"
                 name="name"
-                :calss="{'is-invalid':errors.has('name')}"
+                class="col form-control"
+                :class="{'is-invalid':errors.has('name'),'inputBorder':!errors.has('name')}"
                 v-model="form.user.name"
                 v-validate="'required'"
               >
@@ -25,9 +25,10 @@
               <input
                 placeholder="號碼"
                 type="number"
-                class="col"
                 id="userPhone"
                 name="tel"
+                class="col form-control"
+                :class="{'is-invalid':errors.has('tel'),'inputBorder':!errors.has('tel')}"
                 v-model="form.user.tel"
                 v-validate="'required|digits:10'"
               >
@@ -39,25 +40,121 @@
             <input
               placeholder="Email"
               type="text"
-              class="col"
               id="userEmail"
               name="email"
+              class="form-control"
+              :class="{'is-invalid':errors.has('email'),'inputBorder':!errors.has('email')}"
               v-validate="'required|email'"
             >
             <span class="text-danger mt-2 d-block" v-if="errors.has('email')">請輸入正確格式Email</span>
           </div>
           <div>
             <label class="py-3">運送方式</label>
-            <select name class="form-control">
+            <select class="form-control" id="ship" @change.prevent="shipValue">
               <option value="home">宅配到府</option>
               <option value="fm">全家門市取貨服務</option>
               <option value="711">7-11門市取貨服務</option>
             </select>
           </div>
+          <div>
+            <div v-if="form.user.ship==='home'">
+              <label for="address" class="py-3">收件人地址</label>
+              <input
+                id="address"
+                name="address"
+                type="text"
+                class="form-control"
+                :class="{'is-invalid':errors.has('email'),'inputBorder':!errors.has('address')}"
+                placeholder="請輸入收件人地址"
+                v-validate="'required'"
+                v-model="form.user.address"
+              >
+            </div>
+            <div v-if="form.user.ship==='fm'">
+              <label for="address" class="py-3">全家超商門市</label>
+              <input
+                id="address"
+                name="address"
+                type="text"
+                class="form-control"
+                :class="{'is-invalid':errors.has('email'),'inputBorder':!errors.has('address')}"
+                placeholder="門市地址"
+                v-validate="'required'"
+                v-model="form.user.address"
+              >
+            </div>
+            <div v-if="form.user.ship==='711'">
+              <label for="address" class="py-3">711超商門市</label>
+              <input
+                id="address"
+                name="address"
+                type="text"
+                class="form-control"
+                :class="{'is-invalid':errors.has('email'),'inputBorder':!errors.has('address')}"
+                placeholder="門市地址"
+                v-validate="'required'"
+                v-model="form.user.address"
+              >
+            </div>
+            <span class="text-danger mt-2 d-block" v-if="errors.has('address')">請輸入正確地址</span>
+          </div>
         </div>
         <div class="main col-11 col-md-9">
-          <label class="py-3">付款方式</label>
-          <input type="text" class="col-12">
+          <div>
+            <label class="py-3">付款方式</label>
+            <select class="form-control" id="payMethod" @change.prevent="payMethodValue">
+              <option value="delivery">貨到付款</option>
+              <option value="credit">信用卡付款</option>
+            </select>
+          </div>
+          <div v-if="form.user.payMethod === 'credit'">
+            <div class="row align-items-center">
+              <div class="col-lg-6 px-0">
+                <div class="py-2 col row">
+                  <label for class="py-2 col">信用卡卡號:</label>
+                  <input
+                    type="text"
+                    class="inputBorder col-8"
+                    placeholder="請輸入十六位數值之信用卡卡號"
+                    name="ctl00$ContentPlaceHolder1$strCardNo"
+                    v-model="form.user.card.number"
+                    @focus.prevent="isFlipped = true"
+                  >
+                </div>
+                <div class="py-2 col row">
+                  <label for class="py-2 col">卡片到期日:</label>
+                  <input
+                    type="text"
+                    class="inputBorder col-8"
+                    placeholder="MM/YY 西元月年"
+                    v-model="form.user.card.date"
+                    @focus.prevent="isFlipped = true"
+                  >
+                </div>
+                <div class="py-2 col row">
+                  <label for class="py-2 col">卡片檢查碼:</label>
+                  <input
+                    type="text"
+                    class="inputBorder col-8"
+                    placeholder="卡片背面後三碼"
+                    v-model="form.user.card.ccv"
+                    @focus.prevent="isFlipped = false"
+                  >
+                </div>
+              </div>
+              <div class="col-lg-6 indexCard" :class="{'rotateBack':isFlipped === false}">
+                <div class="cardFront">
+                  <div class="number">{{form.user.card.number}}</div>
+                  <div class="date">{{form.user.card.date}}</div>
+                  <img src="@/images/checkout/card_bg.png" alt="信用卡" class="pt-3">
+                </div>
+                <div class="cardBack">
+                  <div class="ccv">{{form.user.card.ccv}}</div>
+                  <img src="@/images/checkout/card_back_bg.png" alt="信用卡" class="pt-3">
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="main col-11 col-md-9">
           <label for="comment" class="py-3">備註</label>
@@ -82,13 +179,21 @@ export default {
   data() {
     return {
       isLoading: false,
+      isFlipped: true,
       form: {
         //建立對應資料結購
         user: {
           name: "",
           tel: "",
           email: "",
-          address: ""
+          ship: "home",
+          address: "",
+          payMethod: "delivery",
+          card: {
+            number: "1234-5678-9012-3456",
+            date: "05/2020",
+            ccv: "556"
+          }
         },
         message: ""
       }
@@ -108,6 +213,8 @@ export default {
             if (response.data.success) {
               console.log("訂單確認建立 導頁至結帳畫面");
               vm.$router.push(`/confirm/${response.data.orderId}`);
+            } else {
+              alert(response.data.message);
             }
             vm.isLoading = false;
           });
@@ -119,8 +226,17 @@ export default {
           console.log("欄位不完整");
         }
       });
+    },
+    shipValue() {
+      const vm = this;
+      vm.form.user.ship = document.querySelector("#ship").value;
+    },
+    payMethodValue() {
+      const vm = this;
+      vm.form.user.payMethod = document.querySelector("#payMethod").value;
     }
   },
+  created() {},
   mounted() {
     document.querySelector(".checkInfo").style = `border:3px solid #235a55`;
     document.querySelector(".checkInfo>i").style = `color:#235a55`;
@@ -137,6 +253,9 @@ export default {
 
 #checkInfo {
   color: $color-green;
+  #ship {
+    color: $color-green;
+  }
   .main {
     label,
     h4 {
@@ -146,19 +265,89 @@ export default {
     padding: 18px;
     border-radius: 8px;
     box-shadow: 0px 1px 2px 2px $color-green;
-    input,
+    .inputBorder,
     select {
-      background: transparent;
       border: 1px solid $color-green;
       border-radius: 5px;
       height: 35px;
     }
     textarea {
-      background: transparent;
       border: 1px solid $color-green;
       border-radius: 5px;
       height: 160px;
       padding-top: 10px;
+    }
+  }
+  .rotateBack{
+    .cardFront{
+      transform:rotateY(-180deg);
+      backface-visibility:hidden;
+    }
+    .cardBack{
+      transform:rotateY(0deg) !important;
+      z-index: 1 !important;
+      backface-visibility:hidden;
+    }
+  }
+  .indexCard {
+    position: relative;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: 0;
+    overflow: hidden;
+    @include mobile {
+      display: none;
+    }
+    img {
+      width: 360px;
+    }
+    .number {
+      position: absolute;
+      z-index: 1;
+      margin: 0 auto;
+      top: 150px;
+      left: 60px;
+      font-size: 20px;
+      line-height: 25px;
+      font-weight: 600;
+      font-family: "微軟正黑體";
+      color: #fff;
+    }
+    .date {
+      position: absolute;
+      z-index: 1;
+      margin: 0 auto;
+      top: 190px;
+      left: 210px;
+      font-size: 16px;
+      line-height: 25px;
+      font-weight: 600;
+      font-family: "微軟正黑體";
+      color: #fff;
+    }
+    .ccv {
+      position: absolute;
+      z-index: 1;
+      margin: 0 auto;
+      top: 122px;
+      left: 240px;
+      font-size: 20px;
+      line-height: 25px;
+      font-weight: 600;
+      font-family: "微軟正黑體";
+      color: #000;
+    }
+    .cardFront{
+      transition:1s;
+    }
+    .cardBack{
+      transition:1s;
+      transform:rotateY(-180deg);
+      position:absolute;
+      top: 0;
+      z-index: -1;
     }
   }
   .CheckOut {
@@ -170,7 +359,7 @@ export default {
     width: 20%;
     padding: 15px 0;
     border-radius: 1rem;
-    background:$color-green;
+    background: $color-green;
     color: #fff;
     letter-spacing: 0.3rem;
     animation-iteration-count: infinite;

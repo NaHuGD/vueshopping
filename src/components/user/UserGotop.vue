@@ -12,9 +12,9 @@ export default {
   methods: {
     gotopFn() {
       cancelAnimationFrame(timer);
-      //获取当前毫秒数
+      //獲取當前毫秒數
       let startTime = new Date();
-      //获取当前页面的滚动高度
+      //獲取當前頁面滾動高度
       let b = document.body.scrollTop || document.documentElement.scrollTop;
       let d = 500;
       let c = b;
