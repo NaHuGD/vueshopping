@@ -39,7 +39,7 @@
             <label for="userEmail" class="py-3">聯絡信箱</label>
             <input
               placeholder="Email"
-              type="text"
+              type="email"
               id="userEmail"
               name="email"
               class="form-control"
@@ -64,7 +64,7 @@
                 name="address"
                 type="text"
                 class="form-control"
-                :class="{'is-invalid':errors.has('email'),'inputBorder':!errors.has('address')}"
+                :class="{'is-invalid':errors.has('address'),'inputBorder':!errors.has('address')}"
                 placeholder="請輸入收件人地址"
                 v-validate="'required'"
                 v-model="form.user.address"
@@ -77,7 +77,7 @@
                 name="address"
                 type="text"
                 class="form-control"
-                :class="{'is-invalid':errors.has('email'),'inputBorder':!errors.has('address')}"
+                :class="{'is-invalid':errors.has('address'),'inputBorder':!errors.has('address')}"
                 placeholder="門市地址"
                 v-validate="'required'"
                 v-model="form.user.address"
@@ -90,7 +90,7 @@
                 name="address"
                 type="text"
                 class="form-control"
-                :class="{'is-invalid':errors.has('email'),'inputBorder':!errors.has('address')}"
+                :class="{'is-invalid':errors.has('address'),'inputBorder':!errors.has('address')}"
                 placeholder="門市地址"
                 v-validate="'required'"
                 v-model="form.user.address"
@@ -109,48 +109,67 @@
           </div>
           <div v-if="form.user.payMethod === 'credit'">
             <div class="row align-items-center">
-              <div class="col-lg-6 px-0">
-                <div class="py-2 col row">
-                  <label for class="py-2 col">信用卡卡號:</label>
+              <div class="col-12 col-lg-4">
+                <div class="py-2">
+                  <label for class="pb-2 col px-0">信用卡卡號:</label>
                   <input
                     type="text"
-                    class="inputBorder col-8"
+                    class="inputBorder col"
                     placeholder="請輸入十六位數值之信用卡卡號"
-                    name="ctl00$ContentPlaceHolder1$strCardNo"
+                    name=""
                     v-model="form.user.card.number"
                     @focus.prevent="isFlipped = true"
                   >
                 </div>
-                <div class="py-2 col row">
-                  <label for class="py-2 col">卡片到期日:</label>
-                  <input
-                    type="text"
-                    class="inputBorder col-8"
-                    placeholder="MM/YY 西元月年"
-                    v-model="form.user.card.date"
-                    @focus.prevent="isFlipped = true"
-                  >
+                <div class="py-2">
+                  <label for class="pb-2 col px-0">卡片到期日:</label>
+                  <div class="row px-3">
+                    <select class="form-control col mr-1" id="cardMonth" @change.prevent="cardMonth"
+                    >
+                      <option value="" disabled >月份</option>
+                      <option value="01">一月</option>
+                      <option value="02">二月</option>
+                      <option value="03">三月</option>
+                      <option value="04">四月</option>
+                      <option value="05">五月</option>
+                      <option value="06">六月</option>
+                      <option value="07">七月</option>
+                      <option value="08">八月</option>
+                      <option value="09">九月</option>
+                      <option value="10">十月</option>
+                      <option value="11">十一月</option>
+                      <option value="12">十二月</option>
+                    </select>
+                    <select class="form-control col" id="cardYear" @change.prevent="cardYear"
+                    >
+                      <option value="" disabled>年分</option>
+                      <option :value="2018+item" v-for="(item,key) in 15" :key="key">{{2018+item}}</option>
+                    </select>
+                  </div>
                 </div>
-                <div class="py-2 col row">
-                  <label for class="py-2 col">卡片檢查碼:</label>
+                <div class="py-2">
+                  <label for class="pb-2 col px-0">卡片檢查碼:</label>
                   <input
                     type="text"
-                    class="inputBorder col-8"
+                    class="inputBorder col"
                     placeholder="卡片背面後三碼"
+                    maxlength="3"
                     v-model="form.user.card.ccv"
                     @focus.prevent="isFlipped = false"
                   >
                 </div>
               </div>
-              <div class="col-lg-6 indexCard" :class="{'rotateBack':isFlipped === false}">
-                <div class="cardFront">
-                  <div class="number">{{form.user.card.number}}</div>
-                  <div class="date">{{form.user.card.date}}</div>
-                  <img src="@/images/checkout/card_bg.png" alt="信用卡" class="pt-3">
-                </div>
-                <div class="cardBack">
-                  <div class="ccv">{{form.user.card.ccv}}</div>
-                  <img src="@/images/checkout/card_back_bg.png" alt="信用卡" class="pt-3">
+              <div class="col-12 col-lg">
+                <div class="indexCard" :class="{'rotateBack':isFlipped === false}">
+                  <div class="cardFront">
+                    <div class="number">{{form.user.card.number}}</div>
+                    <div class="date">{{form.user.card.date.month}}/{{form.user.card.date.year}}</div>
+                    <img src="@/images/checkout/card_bg.png" alt="信用卡" class="pt-3">
+                  </div>
+                  <div class="cardBack">
+                    <div class="ccv">{{form.user.card.ccv}}</div>
+                    <img src="@/images/checkout/card_back_bg.png" alt="信用卡" class="pt-3">
+                  </div>
                 </div>
               </div>
             </div>
@@ -191,9 +210,13 @@ export default {
           payMethod: "delivery",
           card: {
             number: "1234-5678-9012-3456",
-            date: "05/2020",
+            date:{
+              month:'',
+              year:'',
+            },
             ccv: "556"
-          }
+          },
+          nowDate:"",
         },
         message: ""
       }
@@ -234,9 +257,18 @@ export default {
     payMethodValue() {
       const vm = this;
       vm.form.user.payMethod = document.querySelector("#payMethod").value;
-    }
+    },
+    cardMonth(){
+      const vm = this;
+      vm.form.user.card.date.month = document.querySelector("#cardMonth").value;
+    },
+    cardYear(){
+      const vm = this;
+      vm.form.user.card.date.year = document.querySelector("#cardYear").value;
+    },
   },
-  created() {},
+  created() {
+  },
   mounted() {
     document.querySelector(".checkInfo").style = `border:3px solid #235a55`;
     document.querySelector(".checkInfo>i").style = `color:#235a55`;
@@ -278,76 +310,91 @@ export default {
       padding-top: 10px;
     }
   }
-  .rotateBack{
-    .cardFront{
-      transform:rotateY(-180deg);
-      backface-visibility:hidden;
+  .rotateBack {
+    .cardFront {
+      transform: rotateY(-180deg);
+      backface-visibility: hidden;
     }
-    .cardBack{
-      transform:rotateY(0deg) !important;
+    .cardBack {
+      transform: rotateY(0deg) !important;
       z-index: 1 !important;
-      backface-visibility:hidden;
+      backface-visibility: hidden;
     }
   }
   .indexCard {
     position: relative;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    margin: 0;
+    margin: 0 auto;
+    max-width: 360px;
     overflow: hidden;
+    height: 280px;
     @include mobile {
-      display: none;
+      max-width: 260px;
+      height: 200px;
     }
     img {
       width: 360px;
+      @include mobile {
+        width: 260px;
+      }
     }
     .number {
       position: absolute;
-      z-index: 1;
       margin: 0 auto;
       top: 150px;
       left: 60px;
       font-size: 20px;
       line-height: 25px;
-      font-weight: 600;
+      font-weight: bold;
       font-family: "微軟正黑體";
       color: #fff;
+      @include mobile {
+        top: 115px;
+        left: 25px;
+      }
     }
     .date {
       position: absolute;
-      z-index: 1;
       margin: 0 auto;
       top: 190px;
       left: 210px;
       font-size: 16px;
       line-height: 25px;
-      font-weight: 600;
+      font-weight: bold;
       font-family: "微軟正黑體";
       color: #fff;
+      @include mobile {
+        top: 140px;
+        left: 145px;
+      }
     }
     .ccv {
       position: absolute;
-      z-index: 1;
       margin: 0 auto;
       top: 122px;
       left: 240px;
       font-size: 20px;
       line-height: 25px;
-      font-weight: 600;
+      font-weight: bold;
       font-family: "微軟正黑體";
       color: #000;
+      @include mobile {
+        top: 88px;
+        left: 160px;
+      }
     }
-    .cardFront{
-      transition:1s;
+    .cardFront {
+      transition: 1s;
+      position: absolute;
+      z-index: 1;
+      backface-visibility: hidden;
     }
-    .cardBack{
-      transition:1s;
-      transform:rotateY(-180deg);
-      position:absolute;
+    .cardBack {
+      transition: 1s;
+      transform: rotateY(-180deg);
+      position: absolute;
       top: 0;
       z-index: -1;
+      backface-visibility: hidden;
     }
   }
   .CheckOut {

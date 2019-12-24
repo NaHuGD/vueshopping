@@ -10,7 +10,7 @@
               <p>訂購人:{{order.user.name}}</p>
             </span>
             <span class="col-12 col-md-6 text-md-right">
-              <p>訂購日期:2019/08/78</p>
+              <p>訂購日期:{{order.user.nowDate}}</p>
             </span>
           </div>
           <div class="product py-2">
@@ -35,8 +35,8 @@
               <p class="col p-0">{{order.user.tel}}</p>
             </div>
             <div class="row text-center p-2">
-              <p class="col-7 p-0">收件人地址 :</p>
-              <p class="col p-0">{{order.user.addres}}</p>
+              <p class="col-7 p-0">收件地址 :</p>
+              <p class="col p-0">{{order.user.address}}</p>
             </div>
             <div class="row text-center p-2">
               <p class="col-7 p-0">收件人信箱 :</p>
@@ -47,10 +47,6 @@
             <div class="row text-center p-2">
               <p class="col">總價</p>
               <p class="col">{{order.total | currency}}</p>
-            </div>
-            <div class="row text-center p-2">
-              <p class="col">折扣金額</p>
-              <p class="col">$320</p>
             </div>
             <div class="row text-center p-2">
               <p class="col">運費</p>
