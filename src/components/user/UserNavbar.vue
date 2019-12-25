@@ -17,8 +17,8 @@
           >優惠專區</button>
           <button
             @click.prevent="goNews"
-            :class="{'menuActive':isMenuActive === '健康資訊',menuActiveFn}"
-          >健康資訊</button>
+            :class="{'menuActive':isMenuActive === '最新消息',menuActiveFn}"
+          >最新消息</button>
         </nav>
         <button class="mobNavIcan" @click.prevent="isMobNav = !isMobNav">
           <span class="fa fa-bars"></span>
@@ -93,8 +93,8 @@
         >優惠專區</button>
         <button
           @click.prevent="goNews"
-          :class="{'menuActive':isMenuActive === '健康資訊',menuActiveFn}"
-        >健康資訊</button>
+          :class="{'menuActive':isMenuActive === '最新消息',menuActiveFn}"
+        >最新消息</button>
         <router-link to="/login" tag="button">會員登入</router-link>
         <button>其他</button>
       </div>
@@ -150,7 +150,7 @@ export default {
       vm.$router.push({
         path: `/News`
       });
-      // vm.isMenuActive = "健康資訊";
+      // vm.isMenuActive = "最新消息";
       vm.isMobNav = false;
     },
     getCart() {
@@ -224,7 +224,7 @@ export default {
       } else if (routeName === "Discount") {
         return (vm.isMenuActive = "優惠專區");
       } else if (routeName === "News") {
-        return (vm.isMenuActive = "健康資訊");
+        return (vm.isMenuActive = "最新消息");
       } else {
         return (vm.isMenuActive = "");
       }

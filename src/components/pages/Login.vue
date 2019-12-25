@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="login">
     <form class="form-signin" @submit.prevent="signin">
       <h1 class="h3 mb-3 font-weight-normal">會員登入</h1>
       <label for="inputEmail" class="sr-only">Email address</label>
@@ -13,7 +13,7 @@
           <input type="checkbox" value="remember-me"> Remember me
         </label>
       </div>
-      <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+      <button class="btn-lg btn-block" type="submit">Sign in</button>
       <p class="mt-5 mb-3 text-muted">&copy; 2017-2019</p>
     </form>
   </div>
@@ -35,30 +35,41 @@ export default {
       const api = `${process.env.APIPATH}/admin/signin`;
       const vm = this;
       this.$http.post(api,vm.user).then((response) => {
-        console.log(response.data)
+        console.log(response.data);
         if(response.data.success){ //帳號登入成功時(true)
           vm.$router.push('/admin/products'); //將路由導致首頁
-        }
-      })
-    }
+        };
+      });
+    },
   },
 };
 </script>
 
-<style scoped>
-html,
-body {
-  height: 100%;
+<style lang="scss" scoped>
+@import "@/assets/helpers/breakpoint.scss";
+// html,
+// body {
+//   height: 100%;
+// }
+
+// body {
+//   display: -ms-flexbox;
+//   display: flex;
+//   -ms-flex-align: center;
+//   align-items: center;
+//   padding-top: 40px;
+//   padding-bottom: 40px;
+//   background-color: #000;
+// }
+
+#login{
+  background:$color-lightYellow;
+  height: 100vh;
 }
 
-body {
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-align: center;
-  align-items: center;
-  padding-top: 40px;
-  padding-bottom: 40px;
-  background-color: #f5f5f5;
+button{
+  background:$color-green;
+  color:$color-lightYellow;
 }
 
 .form-signin {

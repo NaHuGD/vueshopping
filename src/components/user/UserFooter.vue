@@ -8,7 +8,7 @@
       <div class="about col-sm-4 py-sm-0 py-3">
         <span>關於KaiZ</span>
         <div>
-          <p>Follow all the topics you care about, and we’ll deliver the best stories for you to your homepage and inbox. Explore</p>
+          <p>隨著CSS3 的普及，過去許多看似酷炫的效果，逐漸也都能透過CSS 來實作，這篇 ... 使這些圖案分別呈現在網頁裡，這樣就能大幅減少多張圖片載入的request 數量。</p>
         </div>
       </div>
       <div class="follow col p-sm-0">
