@@ -3,7 +3,8 @@
     <div class="container">
       <div class="mb-3">優惠專區</div>
       <div class="row">
-        <router-link to="/shop" tag="div" class="box boxOrange col-8">
+        <router-view></router-view>
+        <div class="box boxOrange col-8" @click.prevent="goScratch">
           <div>
             <P>GIFT</P>
           </div>
@@ -19,7 +20,7 @@
             <span></span>
             <p>POINT ME TO REDEEM</p>
           </div>
-        </router-link>
+        </div>
         <div class="box boxBlue col-8">
           <div>
             <P>GIFT</P>
@@ -58,6 +59,25 @@
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  data(){
+    return{
+
+    }
+  },
+  methods:{
+    goScratch(){
+      const vm = this;
+      vm.$router.push({
+        path: `/discount/scratch`
+      });
+    }
+  }
+}
+</script>
+
 
 <style lang="scss" second>
 @import "@/assets/helpers/breakpoint.scss";

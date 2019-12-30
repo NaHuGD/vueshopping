@@ -1,5 +1,5 @@
 <template>
-  <div id="shopInside">
+  <div id="shopInside" class="pt150">
     <loading :active.sync="isLoading"></loading>
     <div>
       <div>
@@ -182,6 +182,9 @@ export default {
 #shopInside {
   max-width: 80%;
   margin: 0 auto;
+  img{
+    width: 100%;
+  }
   .navColumn {
     max-width: 100%;
     display: flex;

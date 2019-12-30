@@ -194,8 +194,6 @@ export default {
     }
     .box1 {
       position: relative;
-      // flex: 0 0 33.333333%;
-      // max-width: 33.333333%;
       img {
         max-width: 434px;
         width: 125%;
@@ -203,13 +201,18 @@ export default {
       p {
         position: absolute;
         top: 50%;
-        left: 50%;
+        left: calc(50% - 0px);
         transform: translate(0%, -50%);
+        letter-spacing: 5px;
         color: #fff;
         font-weight: bold;
         @include mobile() {
           left: 20%;
+          width: 90px;
           transform: translate(0%, -50%);
+        }
+        @include iphone5{
+          left: 10%;
         }
       }
     }
@@ -223,12 +226,14 @@ export default {
       p {
         position: absolute;
         top: 50%;
-        left: 50%;
+        left: calc(50% - 0px);
         transform: translate(0%, -50%);
+        letter-spacing: 5px;
         color: #fff;
         font-weight: bold;
         @include mobile() {
-          left: 40%;
+          left:30%;
+          width: 90px;
         }
       }
     }
@@ -242,12 +247,14 @@ export default {
       p {
         position: absolute;
         top: 50%;
-        left: 50%;
+        left: calc(50% - 5px);
         transform: translate(50%, -50%);
+        letter-spacing: 5px;
         color: #fff;
         font-weight: bold;
         @include mobile() {
-          left: 40%;
+          left:35%;
+          width: 90px;
           transform: translate(0%, -50%);
         }
       }

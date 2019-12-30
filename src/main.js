@@ -15,7 +15,8 @@ import 'swiper/dist/css/swiper.css'
 
 import App from './App';
 import router from './router';
-import './bus'
+import './bus';
+import './fadein';
 import currencyFilter from "./filters/currency";
 import dateFilter from "./filters/date";
 

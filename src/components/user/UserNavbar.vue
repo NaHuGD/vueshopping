@@ -1,7 +1,7 @@
 <template>
   <div>
     <loading :active.sync="isLoading"></loading>
-    <header id="header">
+    <header id="header" :class="{'bgTransparent':menuBgFn}">
       <div class="inner">
         <router-link to="/home" class="logo" alt="首頁">
           <h1>Kai ZBB</h1>
@@ -13,12 +13,12 @@
           >商品列表</button>
           <button
             @click.prevent="goDiscount"
-            :class="{'menuActive':isMenuActive === '優惠專區',menuActiveFn}"
-          >優惠專區</button>
+            :class="{'menuActive':isMenuActive === '優惠活動',menuActiveFn}"
+          >優惠活動</button>
           <button
             @click.prevent="goNews"
-            :class="{'menuActive':isMenuActive === '最新消息',menuActiveFn}"
-          >最新消息</button>
+            :class="{'menuActive':isMenuActive === '健康資訊',menuActiveFn}"
+          >健康資訊</button>
         </nav>
         <button class="mobNavIcan" @click.prevent="isMobNav = !isMobNav">
           <span class="fa fa-bars"></span>
@@ -89,12 +89,12 @@
         >商品列表</button>
         <button
           @click.prevent="goDiscount"
-          :class="{'menuActive':isMenuActive === '優惠專區',menuActiveFn}"
-        >優惠專區</button>
+          :class="{'menuActive':isMenuActive === '優惠活動',menuActiveFn}"
+        >優惠活動</button>
         <button
           @click.prevent="goNews"
-          :class="{'menuActive':isMenuActive === '最新消息',menuActiveFn}"
-        >最新消息</button>
+          :class="{'menuActive':isMenuActive === '健康資訊',menuActiveFn}"
+        >健康資訊</button>
         <router-link to="/login" tag="button">會員登入</router-link>
         <button>其他</button>
       </div>
@@ -140,9 +140,9 @@ export default {
     goDiscount() {
       const vm = this;
       vm.$router.push({
-        path: `/Discount`
+        path: `/discount`
       });
-      // vm.isMenuActive = "優惠專區";
+      // vm.isMenuActive = "優惠活動";
       vm.isMobNav = false;
     },
     goNews() {
@@ -150,7 +150,7 @@ export default {
       vm.$router.push({
         path: `/News`
       });
-      // vm.isMenuActive = "最新消息";
+      // vm.isMenuActive = "健康資訊";
       vm.isMobNav = false;
     },
     getCart() {
@@ -222,11 +222,20 @@ export default {
       ) {
         return (vm.isMenuActive = "商品列表");
       } else if (routeName === "Discount") {
-        return (vm.isMenuActive = "優惠專區");
+        return (vm.isMenuActive = "優惠活動");
       } else if (routeName === "News") {
-        return (vm.isMenuActive = "最新消息");
+        return (vm.isMenuActive = "健康資訊");
       } else {
         return (vm.isMenuActive = "");
+      }
+    },
+    menuBgFn(){
+      const vm = this;
+      let routeName = vm.$route.name;
+      if(routeName === 'Home'){
+        return true;
+      }else{
+        return false;
       }
     }
   },
@@ -252,6 +261,9 @@ export default {
 <style lang="scss">
 @import "@/assets/helpers/breakpoint.scss";
 
+.bgTransparent{
+  background:transparent !important;
+}
 #header {
   position: fixed;
   background: $color-lightYellow;

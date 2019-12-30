@@ -78,7 +78,7 @@
                 type="text"
                 class="form-control"
                 :class="{'is-invalid':errors.has('address'),'inputBorder':!errors.has('address')}"
-                placeholder="門市地址"
+                placeholder="全家門市地址"
                 v-validate="'required'"
                 v-model="form.user.address"
               >
@@ -91,7 +91,7 @@
                 type="text"
                 class="form-control"
                 :class="{'is-invalid':errors.has('address'),'inputBorder':!errors.has('address')}"
-                placeholder="門市地址"
+                placeholder="711門市地址"
                 v-validate="'required'"
                 v-model="form.user.address"
               >
@@ -124,7 +124,8 @@
                 <div class="py-2">
                   <label for class="pb-2 col px-0">卡片到期日:</label>
                   <div class="row px-3">
-                    <select class="form-control col mr-1" id="cardMonth" @change.prevent="cardMonth"
+                    <select class="form-control col mr-1" id="cardMonth" 
+                    @change.prevent="cardMonth"
                     >
                       <option value="" disabled >月份</option>
                       <option value="01">一月</option>
@@ -140,7 +141,8 @@
                       <option value="11">十一月</option>
                       <option value="12">十二月</option>
                     </select>
-                    <select class="form-control col" id="cardYear" @change.prevent="cardYear"
+                    <select class="form-control col" id="cardYear" 
+                    @change.prevent="cardYear"
                     >
                       <option value="" disabled>年分</option>
                       <option :value="2018+item" v-for="(item,key) in 15" :key="key">{{2018+item}}</option>
@@ -260,10 +262,12 @@ export default {
     },
     cardMonth(){
       const vm = this;
+      vm.isFlipped = true;
       vm.form.user.card.date.month = document.querySelector("#cardMonth").value;
     },
     cardYear(){
       const vm = this;
+      vm.isFlipped = true;
       vm.form.user.card.date.year = document.querySelector("#cardYear").value;
     },
   },

@@ -41,8 +41,7 @@
 	}
 
 	h1, h2, h3, h4, h5, h6, p{
-		font-family: "微軟正黑體", "Microsoft JhengHei", "Segoe UI Semibold", "Segoe UI", "Lucida Grande", Verdana, Arial, Helvetica, sans-serif
-
+		font-family: "微軟正黑體", "Microsoft JhengHei", "Segoe UI Semibold", "Segoe UI", "Lucida Grande", Verdana, Arial, Helvetica, sans-serif;
     }
     button{
         margin: 0;
@@ -67,16 +66,43 @@ body{
 .pointer{
     cursor:pointer !important;
 }
+/*fadein*/
+.fadein, .fadein2, .fadein3 {
+    opacity: 0;
+    transition: all 1.5s; 
+}
+.fadeinDelay{
+    opacity: 0;
+    transition: all 2s;
+    transition-delay: .8s;
+}
+.up {
+    transform: translateY(20%); 
+}
+.down {
+    transform: translateY(-20%); 
+}
+.left {
+    transform: translateX(10%); 
+}
+.right {
+    transform: translateX(-10%); 
+}
+.fadein.active,.fadein2.active,.fadeinDelay.active {
+    opacity: 1;
+    transform: translateX(0%);
+    transform: translateY(0%);    
+} 
 
 /*main*/
-#home,#shopInside{
-    padding-top:150px;
-    width: 90%;
-    margin: 0 auto;
-    img{
-        width: 100%;
-    }
-}
+// #home{
+//     padding-top:150px;
+//     width: 90%;
+//     margin: 0 auto;
+//     img{
+//         width: 100%;
+//     }
+// }
 .bgActive{
     transition:.4s;
     background-color:$color-bgActive;

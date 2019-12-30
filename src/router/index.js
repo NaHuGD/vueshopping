@@ -13,6 +13,7 @@ import Home from '@/components/pages/Home';
 import Shop from '@/components/pages/Shop';
 import ShopInside from '@/components/pages/ShopInside';
 import Discount from '@/components/pages/Discount';
+import Scratch from '@/components/pages/Scratch';
 import News from '@/components/pages/News';
 // import CheckoutPage from '@/components/pages/CheckoutPage';
 import CheckProduct from '@/components/user/CheckProduct';
@@ -90,6 +91,11 @@ export default new Router({
                     path: 'discount',
                     name: 'Discount',
                     component: Discount,
+                },
+                {
+                    path: 'discount/scratch',
+                    name: 'Scratch',
+                    component: Scratch,
                 },
                 {   //訊息頁
                     path: 'news',
