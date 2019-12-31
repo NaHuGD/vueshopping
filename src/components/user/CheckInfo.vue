@@ -426,10 +426,6 @@ export default {
       width: 40%;
     }
   }
-  .CheckOut:hover {
-    // animation-name: buttonStyle;
-  }
-
   @keyframes buttonStyle {
     0% {
       background: repeating-linear-gradient(
