@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-// import HelloWorld from '@/components/HelloWorld';
 import Admin from '@/components/Admin';
 import User from '@/components/user/User';
 import Login from '@/components/pages/Login';
