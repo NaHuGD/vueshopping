@@ -9,7 +9,7 @@ module.exports = {
 
     // Paths
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/vueshopping/dist/',//編譯後的路徑
+    assetsPublicPath: '/view/',//編譯後的路徑
     proxyTable: {},
 
     // Various Dev Server settings
