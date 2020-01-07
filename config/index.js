@@ -43,7 +43,7 @@ module.exports = {
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/vueshopping/',
+    assetsPublicPath: '/vueshopping/dist/',
 
     /**
      * Source Maps
