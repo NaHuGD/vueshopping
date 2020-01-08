@@ -466,6 +466,9 @@ export default {
     }
     & > div:nth-child(1) {
       display: flex;
+      img{
+        width:50px;
+      }
       & > div {
         position: relative;
         padding-left: 5%;
