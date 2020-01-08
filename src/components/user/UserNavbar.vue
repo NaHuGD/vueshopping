@@ -468,6 +468,7 @@ export default {
       display: flex;
       img{
         width:50px;
+        height: 100%;
       }
       & > div {
         position: relative;
