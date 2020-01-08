@@ -560,10 +560,11 @@ export default {
     position: relative;
     border: 2px solid #000;
     border-radius: 18px;
-    height: 35px;
-    padding-left: 20px;
+    padding:5px 0 5px 20px;
     background: rgba(255, 255, 255, 0.4);
     color: #000;
+    width: 100%;
+    height: 100%;
     &::placeholder {
       color: #000;
     }
