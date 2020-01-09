@@ -8,10 +8,8 @@
       <label for="inputPassword" class="sr-only">Password</label>
       <input type="password" id="inputPassword" class="form-control"
        placeholder="Password" required  v-model="user.password">
-      <div class="checkbox mb-3">
-        <label>
-          <input type="checkbox" value="remember-me"> Remember me
-        </label>
+      <div class="checkbox mb-3 text-danger">
+        {{isMessage}}
       </div>
       <button class="btn-lg btn-block" type="submit">Sign in</button>
       <p class="mt-5 mb-3 text-muted">&copy; 2017-2019</p>
@@ -24,6 +22,7 @@ export default {
   name: 'HelloWorld',
   data () {
     return {
+      isMessage:'',
       user:{
         username:'',
         password:'',
@@ -35,6 +34,7 @@ export default {
       const api = `${process.env.APIPATH}/admin/signin`;
       const vm = this;
       this.$http.post(api,vm.user).then((response) => {
+        vm.isMessage = response.data.message; 
         console.log(response.data);
         if(response.data.success){ //帳號登入成功時(true)
           vm.$router.push('/admin/products'); //將路由導致首頁

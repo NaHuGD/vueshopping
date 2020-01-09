@@ -5,7 +5,7 @@
       <div class="menuBar row mx-0 mb-4 p-0">
         <div class="box1 p-0" @click.prevent="getAll()" :class="{'active':isMenuActive === '全部商品'}">
           <img src="@/images/shop/01.png" alt ondragstart="return false;">
-          <p class>全部商品</p>
+          <p>全部商品</p>
         </div>
         <div
           class="box2 p-0"
@@ -13,7 +13,7 @@
           :class="{'active':isMenuActive === '健身護具'}"
         >
           <img src="@/images/shop/02.png" alt ondragstart="return false;">
-          <p class>健身護具</p>
+          <p>健身護具</p>
         </div>
         <div
           class="box3 p-0"
@@ -21,7 +21,7 @@
           :class="{'active':isMenuActive === '優質乳清'}"
         >
           <img src="@/images/shop/03.png" alt ondragstart="return false;">
-          <p class>優質乳清</p>
+          <p>優質乳清</p>
         </div>
       </div>
       <div class="subcate mb-3">{{isMenuActive}}</div>

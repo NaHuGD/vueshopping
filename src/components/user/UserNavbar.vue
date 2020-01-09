@@ -43,8 +43,8 @@
               </div>
               <p>{{item.product.title}}</p>
               <span class="d-block pt-4">
-                <p>x{{item.qty}}</p>
-                <p>{{item.product.price | currency }}/件</p>
+                <p>x{{item.qty}}/{{item.product.unit}}</p>
+                <p>{{item.product.price | currency }}</p>
               </span>
             </div>
           </div>
@@ -563,7 +563,8 @@ export default {
     padding:5px 0 5px 20px;
     background: rgba(255, 255, 255, 0.4);
     color: #000;
-    width: 100%;
+    width: 198px;
+    max-width: 100%;
     height: 100%;
     &::placeholder {
       color: #000;

@@ -25,6 +25,7 @@
               <input
                 placeholder="號碼"
                 type="number"
+                onkeyup="value=value.replace(/[^\d]/g,'') "
                 id="userPhone"
                 name="tel"
                 class="col form-control"
@@ -229,6 +230,11 @@ export default {
       const vm = this;
       const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/order`;
       const order = vm.form;
+      let date = new Date();
+      let y = date.getFullYear();
+      let m = date.getMonth();
+      let d = date.getDate();
+      vm.form.user.nowDate = `${y}/${m+1}/${d}`;
       vm.isLoading = true;
       this.$validator.validate().then(result => {
         if (result) {

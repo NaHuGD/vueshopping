@@ -4,7 +4,7 @@
       <div class="mb-3">優惠專區</div>
       <div class="row">
         <router-view></router-view>
-        <div class="box boxOrange col-8" @click.prevent="goScratch">
+        <div class="box boxOrange col-8" @click.prevent="goTurn">
           <div>
             <P>GIFT</P>
           </div>
@@ -68,10 +68,10 @@ export default {
     }
   },
   methods:{
-    goScratch(){
+    goTurn(){
       const vm = this;
       vm.$router.push({
-        path: `/discount/scratch`
+        path: `/discount/turn`
       });
     }
   }
