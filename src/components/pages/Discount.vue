@@ -14,7 +14,7 @@
             <span>+0123 456 789</span>
           </div>
           <div>
-            <p>$???%</p>
+            <p>TurnGame</p>
           </div>
           <div>
             <span></span>
@@ -225,12 +225,12 @@ export default {
     }
   }
   .box:hover{
-    filter:grayscale(0%);
+    // filter:grayscale(0%);
   }
   .box {
     cursor:pointer;
     transition:.5s;
-    filter:grayscale(100%);
+    // filter:grayscale(100%);
     position: relative;
     padding: 0;
     margin: 1rem auto;
