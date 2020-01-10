@@ -127,8 +127,8 @@ export default {
     .box1 {
       width: 100%;
       height: 100%;
-      @include md {
-        // height:750px;
+      @include mobile {
+        height:375px;
       }
     }
     .box2 {
@@ -148,6 +148,9 @@ export default {
     .box2 {
       @include md() {
         order: 1;
+      }
+      @include mobile {
+        height:375px;
       }
     }
   }
