@@ -320,10 +320,11 @@ export default {
       width: 11.5vw;
       height: 11.5vw;
       border-radius: 100%;
+      overflow:hidden;
       & > p {
         position: absolute;
         top: 50%;
-        right: 50%;
+        right:60%;
         transform: translate(50%, -50%);
         font-weight: bold;
         font-size: 2vw;

@@ -257,7 +257,8 @@ export default {
     p {
       color: #d4d4d4;
       padding: 5px 0;
-      line-height: 1.3rem;
+      line-height:1.3rem;
+      text-align:justify;
     }
   }
   .follow {

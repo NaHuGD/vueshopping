@@ -8,8 +8,13 @@
         @content
     }
 };
-@mixin pad {
+@mixin md {
     @media(max-width:767px){
+        @content
+    }
+};
+@mixin pad {
+    @media(max-width:768px){
         @content
     }
 };
