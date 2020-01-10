@@ -9,12 +9,12 @@
       </div>
       <div class="box2 col-12 col-md-6 p-0">
         <div class="row m-0">
-          <img class="col-6 p-0" src="@/images/index/e1.jpg" alt>
+          <img class="col-6 p-0" src="@/images/index/e1.jpg" style="background:rgb(0,0,0,.4);">
           <img class="col-6 p-0" src="@/images/index/e1.jpg" alt>
         </div>
         <div class="row m-0">
           <img class="col-6 p-0" src="@/images/index/e1.jpg" alt>
-          <img class="col-6 p-0" src="@/images/index/e1.jpg" alt>
+          <img class="col-6 p-0" src="@/images/index/e1.jpg" style="background:rgb(0,0,0,.4);">
         </div>
       </div>
     </div>
@@ -22,22 +22,22 @@
       <div class="box1 col-12 col-md-6 p-0">
         <img class="p-0" src="@/images/index/e2.jpg" alt>
       </div>
-      <div class="box2 col-12 col-md-6">
+      <div class="box2 col-12 col-md-6 p-0">
         <p>EVENT2</p>
       </div>
     </div>
     <div class="row event03 p-0 m-0">
       <div class="scroll col-12 p-0">
         <div class="col-12 col-md-6 info fadein right">
-          <p class="h3">KAIZ KAIZ KAIZ</p>
+          <p class="h3 f-weight">Kzaiz words</p>
           <p class="py-4 py-md-4">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
           <p class="py-md-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla nam, enim minus consequatur vero nisi.met consectetur adipisicing elit. Nulla nam, enim minus consequatur vero nisi.met consectetur adipisicing elit. Nulla nam, enim minus consequatur vero nisi.</p>
-          <span></span>
+          <p>KaizBB</p>
         </div>
       </div>
     </div>
     <div class="event04">
-      <p align="center" class="h3 py-4">LATEST ARTICLES</p>
+      <p align="center" class="h3 pb-4">LATEST ARTICLES</p>
       <swiper :options="swiperOption" class="swiper">
         <swiper-slide class="box">Slide 1</swiper-slide>
         <swiper-slide class="box">Slide 2</swiper-slide>
@@ -173,8 +173,9 @@ export default {
       background-color: #929c9a;
       background-size: cover;
       background-repeat: no-repeat;
-      @include md {
-        background-position: 20% 50%;
+      @include pad {
+        background-attachment: unset;
+        background-position:20% 50%;
       }
       .info{
         order: 1;
@@ -186,19 +187,31 @@ export default {
         text-align: center;
         padding:100px;
         overflow: hidden;
-        @include pad(){
+        @include desktop(){
+          padding:50px;
+        }
+        @include md(){
           height: 50%;
           padding:20px;
         }
         &>p:nth-child(3){
           line-height:2rem; 
           text-align:justify;
+          @include pad(){
+            line-height:1rem; 
+          }
+        }
+        &>p:nth-child(4){
+           font-family: 'Dancing Script';
+           font-weight:bold;
+           font-size:2rem;
+           padding-top:10px;
         }
       }
     }
   }
   .event04 {
-    padding-bottom: 100px;
+    margin:100px 0;
     & > p {
       font-family: impact;
       letter-spacing: 0.2rem;
