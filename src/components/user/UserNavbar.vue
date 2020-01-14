@@ -221,7 +221,7 @@ export default {
         routeName === "ShopInside"
       ) {
         return (vm.isMenuActive = "商品列表");
-      } else if (routeName === "Discount") {
+      } else if (routeName === "Discount" || routeName === "Turn") {
         return (vm.isMenuActive = "優惠活動");
       } else if (routeName === "News") {
         return (vm.isMenuActive = "健康資訊");
@@ -229,12 +229,12 @@ export default {
         return (vm.isMenuActive = "");
       }
     },
-    menuBgFn(){
+    menuBgFn() {
       const vm = this;
       let routeName = vm.$route.name;
-      if(routeName === 'Home'){
+      if (routeName === "Home") {
         return true;
-      }else{
+      } else {
         return false;
       }
     }
@@ -261,8 +261,8 @@ export default {
 <style lang="scss">
 @import "@/assets/helpers/breakpoint.scss";
 
-.bgTransparent{
-  background:transparent !important;
+.bgTransparent {
+  background: transparent !important;
 }
 #header {
   position: fixed;
@@ -466,8 +466,8 @@ export default {
     }
     & > div:nth-child(1) {
       display: flex;
-      img{
-        width:50px;
+      img {
+        width: 50px;
         height: 100%;
       }
       & > div {
@@ -560,7 +560,7 @@ export default {
     position: relative;
     border: 2px solid #000;
     border-radius: 18px;
-    padding:5px 0 5px 20px;
+    padding: 5px 0 5px 20px;
     background: rgba(255, 255, 255, 0.4);
     color: #000;
     width: 198px;

@@ -7,7 +7,7 @@
         <table class="bagTitle">
           <tr class="row">
             <th>品名</th>
-            <th>尺寸</th>
+            <th>尺寸/口味</th>
             <th>數量</th>
             <th>單價</th>
             <th>刪除</th>
@@ -24,7 +24,7 @@
               <img class="col-12 p-0" :src="item.product.imageUrl" :alt="item.product.title">
               <p class="col-12 p-0">{{item.product.title}}</p>
             </td>
-            <td class="col-sm col-2 text-center">L</td>
+            <td class="col-sm col-2 text-center">{{item.size}}</td>
             <td class="col-sm col-2 text-center">{{item.qty}}</td>
             <td class="col-sm col-3 text-center">{{item.product.price | currency}}</td>
             <td class="col-sm col-2 text-center" @click.prevent="cartItemDelete(item)">

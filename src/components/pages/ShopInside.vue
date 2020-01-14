@@ -9,7 +9,7 @@
           <li class="title">{{product.title}}</li>
         </ul>
       </div>
-      <div class="row mb-5 mt-4">
+      <div class="row mb-5 mt-4 align-items-center">
         <img :src="product.imageUrl" :alt="product.title" class="col-md-6">
         <div class="shopInside_info col-md-6 col-xl-4">
           <div>
@@ -18,14 +18,28 @@
             <span>購買數量:</span>
             <div class="row">
               <div class="addSize mt-2 col-6">
-                <select name class="form-control" v-if="product.category !== '配件'">
-                  <option value="SIZE">SIZE</option>
-                  <option value="S">S</option>
-                  <option value="M">M</option>
-                  <option value="L">L</option>
+                <select
+                  :class="{'redBorder':isSize}"
+                  class="form-control"
+                  id="tasteValue"
+                  @change.prevent="tasteValue"
+                  v-if="product.category !== '護具'"
+                >
+                  <option value selected disabled>口味</option>
+                  <option value="草莓">草莓</option>
+                  <option value="巧克力">巧克力</option>
+                  <option value="香草">香草</option>
                 </select>
-                <select name class="form-control" v-else>
-                  <option value="SIZE">SIZE</option>
+                <select
+                  class="form-control"
+                  id="protectiveValue"
+                  @change.prevent="protectiveValue"
+                  v-else
+                >
+                  <option value selected disabled>尺寸</option>
+                  <option value="L">L</option>
+                  <option value="M">M</option>
+                  <option value="S">S</option>
                 </select>
               </div>
               <div class="addNumber mt-2 col-6">
@@ -42,12 +56,11 @@
           </div>
           <h6 class="h5 mt-4">商品描述:</h6>
           <ul class="ml-2">
-            <li class="mb-3">{{product.description}}</li>
+            <li class="productWrite mb-3">{{product.description}}</li>
           </ul>
           <h6 class="h5 mb-3">商品資訊:</h6>
           <ul class="ml-2">
-            <li class="mb-3">實品顏色依單品照為主</li>
-            <li class="mb-3">聚丙烯腈 100%</li>
+            <li class="mb-3">實品顏色依照片為主</li>
             <li class="mb-3">厚薄:適中</li>
             <li class="mb-3">彈性:佳</li>
             <li class="mb-3">素材產地 / 中國</li>
@@ -78,11 +91,13 @@ export default {
   data() {
     return {
       isLoading: false,
+      isSize: false,
       itemId: "",
       products: "", //全部商品
       product: "", //單筆商品
       moreLook: [],
-      num: "1"
+      num: "1",
+      size: "null"
     };
   },
   methods: {
@@ -124,6 +139,18 @@ export default {
         vm.$router.push({ path: `/shop/whey` });
       }
     },
+    tasteValue() {
+      const vm = this;
+      vm.size = document.querySelector("#tasteValue").value;
+      vm.isSize = false;
+      console.log("tasteValue", vm.size);
+    },
+    protectiveValue() {
+      const vm = this;
+      vm.size = document.querySelector("#protectiveValue").value;
+      vm.isSize = false;
+      console.log("protectiveValue", vm.size);
+    },
     addtoCart(id) {
       //qty加入的數量
       const vm = this;
@@ -131,14 +158,23 @@ export default {
       vm.isLoading = true;
       const cart = {
         product_id: id,
-        qty: vm.num
+        qty: vm.num,
+        size: vm.size
       };
-      this.$http.post(url, { data: cart }).then(response => {
-        console.log(response.data);
-        vm.getCart();
-        vm.$bus.$emit("bagToggle:push", false);
+      console.log(cart);
+      if (vm.size === "null") {
+        alert("請選擇尺寸/口味");
+        vm.isSize = true;
         vm.isLoading = false;
-      });
+        return;
+      } else {
+        this.$http.post(url, { data: cart }).then(response => {
+          console.log("加入購物車", response.data);
+          vm.getCart();
+          vm.$bus.$emit("bagToggle:push", false);
+          vm.isLoading = false;
+        });
+      }
     },
     buyNow(id) {
       console.log(id);
@@ -146,13 +182,21 @@ export default {
       const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
       const cart = {
         product_id: id,
-        qty: vm.num
+        qty: vm.num,
+        size: vm.size
       };
-      this.$http.post(url, { data: cart }).then(response => {
-        console.log(response.data);
-        vm.getCart();
-      });
-      this.$router.push("/checkProduct");
+      if (vm.size === "null") {
+        alert("請選擇尺寸/口味");
+        vm.isSize = true;
+        vm.isLoading = false;
+        return;
+      } else {
+        this.$http.post(url, { data: cart }).then(response => {
+          console.log(response.data);
+          vm.getCart();
+        });
+        this.$router.push("/checkProduct");
+      }
     },
     getCart() {
       //取得購物車內容
@@ -182,7 +226,7 @@ export default {
 #shopInside {
   max-width: 80%;
   margin: 0 auto;
-  img{
+  img {
     width: 100%;
     height: 100%;
   }
@@ -218,6 +262,10 @@ export default {
         border-radius: 8px;
       }
     }
+    .productWrite{
+      line-height:1.5rem;
+      letter-spacing:.1rem;
+    }
   }
   .aboutLike {
     h2 {
@@ -235,5 +283,8 @@ export default {
       cursor: pointer;
     }
   }
+}
+.redBorder{
+  border:1px solid $color-red;
 }
 </style>

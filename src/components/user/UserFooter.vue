@@ -2,17 +2,17 @@
   <footer id="footer">
     <div class="info row">
       <div class="contact col-sm-6">
-        <span>聯絡KaiZ</span>
+        <span>凱力位置</span>
         <div id="map"></div>
       </div>
       <div class="about col-sm-4 py-sm-0 py-3">
-        <span>關於KaiZ</span>
+        <span>關於凱力</span>
         <div>
           <p>隨著CSS3 的普及，過去許多看似酷炫的效果，逐漸也都能透過CSS 來實作，這篇 ... 使這些圖案分別呈現在網頁裡，這樣就能大幅減少多張圖片載入的request 數量。</p>
         </div>
       </div>
-      <div class="follow col p-sm-0">
-        <span>追蹤KaiZ</span>
+      <div class="follow col p-sm">
+        <span>追蹤凱力</span>
         <router-link to="/" tag="a">
           <i class="fab fa-twitter-square"></i>Twitter
         </router-link>

@@ -128,7 +128,7 @@
                     <select class="form-control col mr-1" id="cardMonth" 
                     @change.prevent="cardMonth"
                     >
-                      <option value="" disabled >月份</option>
+                      <option value="" selected disabled >月份</option>
                       <option value="01">一月</option>
                       <option value="02">二月</option>
                       <option value="03">三月</option>
@@ -145,7 +145,7 @@
                     <select class="form-control col" id="cardYear" 
                     @change.prevent="cardYear"
                     >
-                      <option value="" disabled>年分</option>
+                      <option value="" selected disabled>年分</option>
                       <option :value="2018+item" v-for="(item,key) in 15" :key="key">{{2018+item}}</option>
                     </select>
                   </div>
