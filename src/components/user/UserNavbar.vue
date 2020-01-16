@@ -19,6 +19,7 @@
             @click.prevent="goNews"
             :class="{'menuActive':isMenuActive === '健康資訊',menuActiveFn}"
           >健康資訊</button>
+          <router-link to="/login" tag="button">會員登入</router-link>
         </nav>
         <button class="mobNavIcan" @click.prevent="isMobNav = !isMobNav">
           <span class="fa fa-bars"></span>
@@ -42,9 +43,10 @@
                 <i class="fas fa-times"></i>
               </div>
               <p>{{item.product.title}}</p>
-              <span class="d-block pt-4">
-                <p>x{{item.qty}}/{{item.product.unit}}</p>
-                <p>{{item.product.price | currency }}</p>
+              <span class="d-block">
+                <p>{{item.size}}</p>
+                <p>x{{item.qty}}</p>
+                <p>{{item.product.price | currency }}/{{item.product.unit}}</p>
               </span>
             </div>
           </div>
@@ -134,7 +136,6 @@ export default {
       vm.$router.push({
         path: `/shop/all`
       });
-      // vm.isMenuActive = "商品列表";
       vm.isMobNav = false;
     },
     goDiscount() {
@@ -142,7 +143,6 @@ export default {
       vm.$router.push({
         path: `/discount`
       });
-      // vm.isMenuActive = "優惠活動";
       vm.isMobNav = false;
     },
     goNews() {
@@ -150,7 +150,6 @@ export default {
       vm.$router.push({
         path: `/News`
       });
-      // vm.isMenuActive = "健康資訊";
       vm.isMobNav = false;
     },
     getCart() {
@@ -217,6 +216,7 @@ export default {
         routeName === "All" ||
         routeName === "Protective" ||
         routeName === "Whey" ||
+        routeName === "Like" ||
         routeName === "ShopSearch" ||
         routeName === "ShopInside"
       ) {
@@ -304,6 +304,7 @@ export default {
       right: 50%;
       transform: translateX(50%);
       line-height: 10px;
+      width: 400px;
       @include pad() {
         right: 0%;
       }
@@ -334,7 +335,7 @@ export default {
         @include mobile() {
           padding: 0 0.2em;
         }
-        &:nth-child(-n + 3) {
+        &:nth-child(-n + 4) {
           @include pad() {
             display: none;
           }
@@ -481,9 +482,15 @@ export default {
         }
         span {
           p:nth-child(1) {
-            float: left;
+            padding: 3px 0;
+            opacity: 0.5;
+            font-size: 0.5rem;
           }
           p:nth-child(2) {
+            clear: both;
+            float: left;
+          }
+          p:nth-child(3) {
             float: right;
           }
         }
@@ -597,7 +604,7 @@ export default {
   height: 100vh;
   background: $color-lightYellow;
   padding: 0.5em 1.25em;
-  z-index: 2;
+  z-index:3;
   & > .logo {
     position: relative;
     margin-top: 15px;

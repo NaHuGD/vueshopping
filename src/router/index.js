@@ -59,6 +59,11 @@ export default new Router({
                             name: 'Whey',
                             component: Shop,//載入樣式
                         },
+                        {
+                            path: 'like', //乳清分頁
+                            name: 'Like',
+                            component: Shop,//載入樣式
+                        },
                     ]
                 },
                 {

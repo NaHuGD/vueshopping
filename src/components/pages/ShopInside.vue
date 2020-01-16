@@ -10,11 +10,17 @@
         </ul>
       </div>
       <div class="row mb-5 mt-4 align-items-center">
-        <img :src="product.imageUrl" :alt="product.title" class="col-md-6">
+        <div class="col-md-6">
+          <img :src="product.imageUrl" :alt="product.title">
+          <span class="like">
+            <i class="fas fa-heart text-danger" v-if="getIfLocalData(product)"></i>
+            <i class="far fa-heart" v-else></i>
+          </span>
+        </div>
         <div class="shopInside_info col-md-6 col-xl-4">
           <div>
             <h2 class="h2 mb-3 mt-xl-0">{{product.title}}</h2>
-            <div class="mb-3">商品存貨:</div>
+            <!-- <div class="mb-3">商品存貨:</div> -->
             <span>購買數量:</span>
             <div class="row">
               <div class="addSize mt-2 col-6">
@@ -31,6 +37,7 @@
                   <option value="香草">香草</option>
                 </select>
                 <select
+                  :class="{'redBorder':isSize}"
                   class="form-control"
                   id="protectiveValue"
                   @change.prevent="protectiveValue"
@@ -50,7 +57,8 @@
             </div>
             <p class="h3 pt-2 pb-2 mb-4">NT.{{product.price}}</p>
           </div>
-          <div class="addShop text-center">
+          <div class="text-danger text-center" v-if="product.in_stock === 0">商品已售完</div>
+          <div class="addShop text-center" v-else>
             <button class="col-6 col-md-5" @click.prevent="addtoCart(product.id,num)">加入購物車</button>
             <button class="col-5" @click.prevent="buyNow(product.id)">直接購買</button>
           </div>
@@ -97,7 +105,8 @@ export default {
       product: "", //單筆商品
       moreLook: [],
       num: "1",
-      size: "null"
+      size: "null",
+      likeData: []
     };
   },
   methods: {
@@ -109,12 +118,21 @@ export default {
       }/products/all`;
       vm.isLoading = true;
       this.$http.get(url).then(response => {
-        console.log(response.data);
-        vm.products = response.data.products;
+        let newArray = response.data.products.filter(function(
+          item,
+          index,
+          arr
+        ) {
+          if (item.id != id) {
+            return item;
+          }
+        });
+        vm.products = newArray;
         for (let i = 0; i < 4; i++) {
           let num = Math.floor(Math.random() * vm.products.length);
-          console.log(num);
-          vm.moreLook.push(response.data.products[num]);
+          console.log(i, num);
+          vm.moreLook.push(vm.products[num]);
+          vm.products.splice(num, 1);
         }
       });
       const api = `${process.env.APIPATH}/api/${
@@ -161,7 +179,6 @@ export default {
         qty: vm.num,
         size: vm.size
       };
-      console.log(cart);
       if (vm.size === "null") {
         alert("請選擇尺寸/口味");
         vm.isSize = true;
@@ -209,12 +226,23 @@ export default {
         vm.$bus.$emit("cartitem:push", response.data.data);
         vm.isLoading = false;
       });
+    },
+    getLocalData() {
+      const vm = this;
+      vm.likeData = JSON.parse(localStorage.getItem("likeData")) || [];
+    },
+    getIfLocalData(item) {
+      const vm = this;
+      return vm.likeData.some(function(ele) {
+        return item.id === ele.id;
+      });
     }
   },
   created() {
     this.itemId = this.$route.params.itemId;
     this.getProduct(this.itemId); //將指定商品id帶入
     this.getCart();
+    this.getLocalData();
   },
   mounted() {}
 };
@@ -242,6 +270,15 @@ export default {
       content: "";
     }
   }
+  .like {
+    position: absolute;
+    top: 3%;
+    right: 3%;
+    padding-right: 15px;
+    & > i {
+      font-size: 1.5rem;
+    }
+  }
   .shopInside_info {
     div:nth-child(1) {
       p {
@@ -262,9 +299,10 @@ export default {
         border-radius: 8px;
       }
     }
-    .productWrite{
-      line-height:1.5rem;
-      letter-spacing:.1rem;
+    .productWrite {
+      line-height: 1.5rem;
+      letter-spacing: 0.1rem;
+      text-align: justify;
     }
   }
   .aboutLike {
@@ -284,7 +322,7 @@ export default {
     }
   }
 }
-.redBorder{
-  border:1px solid $color-red;
+.redBorder {
+  border: 1px solid $color-red;
 }
 </style>

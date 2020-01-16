@@ -7,7 +7,7 @@
         <table class="bagTitle">
           <tr class="row">
             <th>品名</th>
-            <th>尺寸/口味</th>
+            <th>尺寸<br>口味</th>
             <th>數量</th>
             <th>單價</th>
             <th>刪除</th>

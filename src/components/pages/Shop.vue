@@ -1,45 +1,77 @@
 <template>
   <div id="shop" class="pt150">
     <loading :active.sync="isLoading"></loading>
-    <div class="container">
-      <div class="menuBar row mx-0 mb-4 p-0">
-        <div class="box1 p-0" @click.prevent="getAll()" :class="{'active':isMenuActive === '全部商品'}">
-          <img src="@/images/shop/01.png" alt ondragstart="return false;">
-          <p>全部商品</p>
-        </div>
-        <div
-          class="box2 p-0"
+    <div class="row container m-auto">
+      <div class="menuList col-md">
+        <button @click.prevent="getAll()" :class="{'listActive':isMenuActive === '全部商品'}">全部商品</button>
+        <button
           @click.prevent="getProtective()"
-          :class="{'active':isMenuActive === '健身護具'}"
-        >
-          <img src="@/images/shop/02.png" alt ondragstart="return false;">
-          <p>健身護具</p>
-        </div>
-        <div
-          class="box3 p-0"
-          @click.prevent="getWhey()"
-          :class="{'active':isMenuActive === '優質乳清'}"
-        >
-          <img src="@/images/shop/03.png" alt ondragstart="return false;">
-          <p>優質乳清</p>
-        </div>
+          :class="{'listActive':isMenuActive === '健身護具'}"
+        >健身護具</button>
+        <button @click.prevent="getWhey()" :class="{'listActive':isMenuActive === '優質乳清'}">優質乳清</button>
+        <button @click.prevent="getLike()" :class="{'listActive':isMenuActive === '最愛商品'}">最愛商品</button>
       </div>
-      <div class="subcate mb-3">{{isMenuActive}}</div>
-      <div class="row">
-        <div class="col-6 col-md-4 col-lg-3 mb-4" v-for="(item,key) in filteredProducts" :key="key" :class="{'soldOutStyle':item.is_enabled === 0}">
-          <div class="border-0 shadow-sm shop_info" @click="goInside(item.id)">
-            <span class="sale_style" v-if="item.origin_price != 0">SALE</span>
-            <img :src="item.imageUrl" :alt="item.title">
+      <div class="menuMain col-md-10">
+        <div class="menuBar row col-11 mx-0 mb-4 p-0">
+          <div
+            class="box1 p-0 col-4"
+            @click.prevent="getAll()"
+            :class="{'active':isMenuActive === '全部商品'}"
+          >
+            <p>全部商品</p>
           </div>
-          <div class="item_info" @click="goInside(item.id)">
-            <p class="pdname">{{item.title}}</p>
-            <p class="price">
-              <span :class="{'saleFont':item.origin_price != 0}">{{item.price | currency}}</span>
-              <span class="old" v-if="item.origin_price != 0">{{item.origin_price | currency}}</span>
-            </p>
+          <div
+            class="box2 p-0 col-4"
+            @click.prevent="getProtective()"
+            :class="{'active':isMenuActive === '健身護具'}"
+          >
+            <p>健身護具</p>
           </div>
-          <div class="soldOut" v-if="item.is_enabled === 0">
-            <p>SOLD OUT</p>
+          <div
+            class="box3 p-0 col-4"
+            @click.prevent="getWhey()"
+            :class="{'active':isMenuActive === '優質乳清'}"
+          >
+            <p>優質乳清</p>
+          </div>
+          <div
+            class="box4 p-0 col-4"
+            @click.prevent="getLike()"
+            :class="{'active':isMenuActive === '最愛商品'}"
+          >
+            <p>最愛商品</p>
+          </div>
+        </div>
+        <div class="subcate mb-3">{{isMenuActive}}</div>
+        <div class="row">
+          <div
+            class="col-6 col-md-4 col-lg-3 mb-4"
+            v-for="(item,key) in filteredProducts"
+            :key="key"
+            :class="{'soldOutStyle':item.in_stock === 0}"
+          >
+            <div class="border-0 shadow-sm shop_info" @click.prevent="goInside(item.id)">
+              <span class="sale_style" v-if="item.origin_price != 0">SALE</span>
+              <img :src="item.imageUrl" :alt="item.title">
+            </div>
+            <div class="item_info" @click.prevent="goInside(item.id)">
+              <p class="pdname">{{item.title}}</p>
+              <p class="price">
+                <span :class="{'saleFont':item.origin_price != 0}">{{item.price | currency}}</span>
+                <span class="old" v-if="item.origin_price != 0">{{item.origin_price | currency}}</span>
+              </p>
+              <span class="like">
+                <i
+                  class="fas fa-heart addLike"
+                  @click.stop="removeLike(item)"
+                  v-if="getIfLocalData(item)"
+                ></i>
+                <i class="far fa-heart" @click.stop="addLike(item)" v-else></i>
+              </span>
+            </div>
+            <div class="soldOut" v-if="item.in_stock === 0">
+              <p>SOLD OUT</p>
+            </div>
           </div>
         </div>
       </div>
@@ -54,9 +86,11 @@ export default {
   data() {
     return {
       isLoading: false,
+      isLike: false,
       products: [],
       isMenuActive: "全部商品",
-      searchId: ""
+      searchId: "",
+      likeData: []
     };
   },
   methods: {
@@ -84,6 +118,10 @@ export default {
       const vm = this;
       vm.$router.push(`/shop/whey`);
     },
+    getLike() {
+      const vm = this;
+      vm.$router.push(`/shop/like`);
+    },
     goInside(id) {
       const vm = this;
       vm.$router.push(`/shop_inside/${id}`);
@@ -91,6 +129,38 @@ export default {
         top: 0,
         behavior: "smooth"
       });
+    },
+    getLocalData() {
+      const vm = this;
+      vm.likeData = JSON.parse(localStorage.getItem("likeData")) || [];
+    },
+    getIfLocalData(item) {
+      const vm = this;
+      return vm.likeData.some(function(ele) {
+        return item.id === ele.id;
+      });
+    },
+    addLike(item) {
+      console.log(item);
+      const vm = this;
+      let itemId = item.id;
+      let itemTitle = item.title;
+      const likeArr = {
+        title: item.title,
+        id: item.id
+      };
+      vm.likeData.push(likeArr);
+      localStorage.setItem("likeData", JSON.stringify(vm.likeData));
+    },
+    removeLike(item) {
+      console.log(item);
+      const vm = this;
+      const num = vm.likeData.findIndex(function(ele) {
+        return ele.id === item.id;
+      });
+      vm.likeData.splice(num, 1);
+      localStorage.setItem("likeData", JSON.stringify(vm.likeData));
+      console.log("ele", num);
     }
   },
   computed: {
@@ -115,6 +185,15 @@ export default {
           return item.category === "乳清";
         });
         return filtered;
+      } else if (routeName === "Like") {
+        const vm = this;
+        vm.isMenuActive = "最愛商品";
+        filtered = this.products.filter(function(item, index, arr) {
+          return vm.likeData.some(function(ele) {
+            return item.id === ele.id;
+          });
+        });
+        return filtered;
       } else {
         filtered = this.products.filter(function(item) {
           return item.title.includes(vm.searchId);
@@ -129,6 +208,7 @@ export default {
     this.searchId = this.$route.params.id;
     const vm = this;
     vm.getProducts();
+    vm.getLocalData();
     vm.$bus.$on("searchId:push", value => {
       this.searchId = value;
     });
@@ -141,132 +221,113 @@ export default {
 
 /*shop*/
 #shop {
-  // .menu{
-  //     div{
-  //         @include mobile(){
-  //             font-size:.6em;
-  //             max-width:30px;
-  //         }
-  //         margin:.5rem;
-  //         font-weight:bold;
-  //         color:#000;
-  //         text-decoration:none;
-  //         display:inline-block;
-  //         border-bottom: 2px solid #808080;
-  //         border-width:.1rem;
-  //         height: 30px;
-  //         overflow: hidden;
-  //         span{
-  //             display:block;
-  //             display: block;
-  //             transition: all 0.5s ease;
-  //             line-height:30px;
-  //         }
-  //     }
-  //     div:hover :nth-child(1){
-  //         margin-top: -30px;
-  //     }
-  //     :hover{
-  //         opacity:0.7;
-  //     }
-  // }
+  .menuList {
+    @include pad() {
+      display: none;
+    }
+    .listActive {
+      opacity: 0.7;
+    }
+    & > button {
+      background: $color-green;
+      color: $color-lightYellow;
+      width: 100%;
+      text-align: center;
+      margin-bottom: 10px;
+      padding: 15px 0;
+      @include focusNone;
+      &:hover {
+        opacity: 0.7;
+      }
+    }
+  }
+  .menuMain {
+    @include pad() {
+      max-width: 100%;
+      flex: 100%;
+    }
+  }
   .menuBar {
     .active {
-      img {
-        filter: grayscale(0%);
-      }
+      filter: grayscale(0%);
       p {
         opacity: 1;
       }
     }
     cursor: pointer;
-    position: relative;
     flex-wrap: nowrap;
+    height: 300px;
+    @include pad() {
+      height: 200px;
+    }
+    @include mobile() {
+      height: 150px;
+    }
     & > div {
-      img {
-        transition: 0.6s;
-        filter: grayscale(100%);
-      }
+      transition: 0.6s;
+      filter: grayscale(100%);
       p {
         transition: 0.6s;
         opacity: 0;
       }
     }
-    .box1 {
-      position: relative;
-      img {
-        max-width: 434px;
-        width: 125%;
-      }
-      p {
-        position: absolute;
-        top: 50%;
-        left: calc(50% - 0px);
-        transform: translate(0%, -50%);
-        letter-spacing: 5px;
-        color: #fff;
-        font-weight: bold;
-        @include mobile() {
-          left: 20%;
-          width: 90px;
-          transform: translate(0%, -50%);
-        }
-        @include iphone5{
-          left: 10%;
-        }
-      }
-    }
-    .box2 {
-      position: relative;
-      transform: translateX(-11.5%);
-      img {
-        max-width: 496px;
-        width: 125%;
-      }
-      p {
-        position: absolute;
-        top: 50%;
-        left: calc(50% - 0px);
-        transform: translate(0%, -50%);
-        letter-spacing: 5px;
-        color: #fff;
-        font-weight: bold;
-        @include mobile() {
-          left:30%;
-          width: 90px;
-        }
-      }
-    }
-    .box3 {
-      position: relative;
-      transform: translateX(-23%);
-      img {
-        max-width: 434px;
-        width: 125%;
-      }
-      p {
-        position: absolute;
-        top: 50%;
-        left: calc(50% - 5px);
-        transform: translate(50%, -50%);
-        letter-spacing: 5px;
-        color: #fff;
-        font-weight: bold;
-        @include mobile() {
-          left:35%;
-          width: 90px;
-          transform: translate(0%, -50%);
-        }
-      }
-    }
     & > div:hover {
-      img {
-        filter: grayscale(0%);
-      }
+      filter: grayscale(0%);
       p {
         opacity: 1;
       }
     }
+  }
+  div[class^="box"] {
+    height: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 50% 50%;
+    position: relative;
+    @include mobile {
+      background-size: cover;
+    }
+    & > p {
+      padding: 5px;
+      color: #fff;
+      font-size: 1.5rem;
+      position: absolute;
+      top: 50%;
+      left: 30%;
+      font-weight: bold;
+      @include pad {
+        left: 20%;
+      }
+      @include mobile {
+        left: 30%;
+        top: 10%;
+        width: 10px;
+      }
+    }
+  }
+  .box1 {
+    clip-path: polygon(0 0, 100% 0%, 75% 100%, 0% 100%);
+    background-image: url("../../images/shop/m1.jpg");
+    left: 0;
+  }
+  .box2 {
+    clip-path: polygon(25% 0, 100% 0%, 75% 100%, 0% 100%);
+    background-image: url("../../images/shop/m2.jpg");
+    left: -8.4%;
+  }
+  .box3 {
+    clip-path: polygon(25% 0, 100% 0%, 75% 100%, 0% 100%);
+    background-image: url("../../images/shop/m3.jpg");
+    left: -16.8%;
+  }
+  .box4 {
+    clip-path: polygon(25% 0, 100% 0%, 100% 100%, 0% 100%);
+    background-image: url("../../images/shop/m4.jpg");
+    left: -25.2%;
+  }
+  .subcate {
+    padding-bottom: 20px;
+    border-bottom: 1px solid black;
   }
   .shop_info {
     @include fontStyle;
@@ -297,6 +358,20 @@ export default {
   }
   .item_info {
     cursor: pointer;
+    position: relative;
+    .addLike {
+      color: $color-red;
+    }
+    .like {
+      position: absolute;
+      z-index: 2;
+      top: 50%;
+      right: 5%;
+      font-size: 1.3rem;
+      @include mobile() {
+        top: 70%;
+      }
+    }
     .pdname {
       overflow: hidden;
       white-space: nowrap;
@@ -323,7 +398,7 @@ export default {
     display: flex;
     position: absolute;
     z-index: 1;
-    top: -2%;
+    top: 0%;
     left: 0%;
     width: 100%;
     height: 102%;
@@ -334,11 +409,11 @@ export default {
       font-weight: bold;
       text-align: center;
       padding: 15px;
-      border:2px solid #fff;
+      border: 2px solid #fff;
     }
   }
-  .soldOutStyle{
-    filter: grayscale(.8);
+  .soldOutStyle {
+    filter: grayscale(0.5);
   }
 }
 </style>

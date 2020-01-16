@@ -2,10 +2,10 @@
     <div>
         <Navbar/>
         <Alert/>
-        <div class="container-fluid">
-            <div class="row">
+        <div>
+            <div class="row m-0">
                 <Sidebar></Sidebar>
-                <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+                <main class="col-12">
                     <router-view></router-view>
                 </main>
             </div>

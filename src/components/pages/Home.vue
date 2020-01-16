@@ -76,31 +76,31 @@ export default {
     return {
       swiperNum: [
         {
-          img: "/static/img/01.3894a5f.jpg",
+          img: "/vueshopping/static/img/01.3894a5f.jpg",
           title: "健身飲食篇",
           main:
             "不管你是要減重、增肌或是為了健康，運動後的30分鐘到1小時內，聰明攝取一份,運動後補充一份均衡營養的輕食很重要，內容以碳水化合物與蛋白質的"
         },
         {
-          img: "/static/img/02.2b012e6.jpg",
+          img: "/vueshopping/static/img/02.2b012e6.jpg",
           title: "有氧運動迷失",
           main:
             "提到有氧運動，相信許多人都會想到減肥（減重），因為有氧運動的確是可以，健身之前要先了解什麼是核心肌"
         },
         {
-          img: "/static/img/03.ac197fa.jpg",
+          img: "/vueshopping/static/img/03.ac197fa.jpg",
           title: "適合老人的運動有哪些？",
           main:
             "所謂要活就要動，老了也別忘記運動。適合老人的運動類型有3種，包含可提升心肺功能的有氧運動、可強化骨頭和肌肉的肌力訓練，及幫助保"
         },
         {
-          img: "/static/img/04.7f66020.jpg",
+          img: "/vueshopping/static/img/04.7f66020.jpg",
           title: "吃蛋白棒前要搞清楚的5件事情",
           main:
             "隨著食品加工業的發展，以及人們對營養食品需求的增進，熱愛健康的人群已經不再滿足於簡單的多種維生素以及乳清蛋白粉產品。各類蛋白"
         },
         {
-          img: "/static/img/05.f2277e0.jpg",
+          img: "/vueshopping/static/img/05.f2277e0.jpg",
           title: "第一次健身就上手",
           main:
             "下一站，我們即將帶領大家走入健身房，提供獨家的「攻略要點」，協助「健身房新手」不再像無頭蒼蠅於健身房裡亂竄"
