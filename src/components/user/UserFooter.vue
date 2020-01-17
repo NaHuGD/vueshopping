@@ -13,18 +13,18 @@
       </div>
       <div class="follow col p-sm">
         <span>追蹤凱力</span>
-        <router-link to="/" tag="a">
+        <a href="https://twitter.com/?lang=zh-tw">
           <i class="fab fa-twitter-square"></i>Twitter
-        </router-link>
-        <router-link to="/" tag="a">
+        </a>
+        <a href="https://zh-tw.facebook.com/">
           <i class="fab fa-facebook-square"></i>Facebook
-        </router-link>
-        <router-link to="/" tag="a">
+        </a>
+        <a href="https://www.instagram.com/?hl=zh-tw">
           <i class="fab fa-instagram"></i>Instagram
-        </router-link>
-        <router-link to="/" tag="a">
+        </a>
+        <a href="https://line.me/zh-hant/">
           <i class="fab fa-line"></i>Line
-        </router-link>
+        </a>
       </div>
     </div>
     <div class="copyright text-center">

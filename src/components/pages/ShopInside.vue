@@ -84,8 +84,8 @@
           <div class="col-6 col-lg-3 mt-4" v-for="(item,key) in moreLook" :key="key">
             <div @click.prevent="goPath(item.id)">
               <img :src="item.imageUrl" alt>
-              <p style="float:left;">{{item.title}}</p>
-              <p style="float:right;">NT.{{item.price}}</p>
+              <p class="text-left py-2">{{item.title}}</p>
+              <p class="text-left">NT.{{item.price}}</p>
             </div>
           </div>
         </div>
